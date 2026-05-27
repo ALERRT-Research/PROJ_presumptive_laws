@@ -3,17 +3,17 @@ project: Presumptive Laws Dashboard
 type: web
 status: active
 priority: medium
-path: /Users/PTT2/Library/CloudStorage/OneDrive-SharedLibraries-TexasStateUniversity/Martaindale, M Hunter - Research/Projects/Current Projects/PROJ_presumptive_laws
+path: /Users/PTT2/Documents/GitHub/PROJ_presumptive_laws
 deadline: null
 target: null
-effort_remaining: ~20h
+effort_remaining: ~10h
 weekly_commitment: 2h
-last_updated: 2026-05-22
+last_updated: 2026-05-27
 blockers: null
 blocking_others: null
 phase: in-progress
-repo: null
-sync: onedrive
+repo: https://github.com/ALERRT-Research/presumptive-laws
+sync: github
 ---
 
 ## Objectives
