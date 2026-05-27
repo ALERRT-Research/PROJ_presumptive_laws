@@ -9,19 +9,21 @@ Interactive web dashboard mapping presumptive workers' compensation laws for fir
 Quarto website with embedded Shinylive app (Shiny in WebAssembly — fully static, no server required).
 
 ## Data Sources
-- `docs/lit/Insights-Firefighters-First-Responders-2023-Update-Brief.pdf` — NCCI (2023), ~38 NCCI-jurisdiction states, WC presumptions through Nov 2022
-- `docs/lit/s41271-024-00501-5.pdf` — Brandt-Rauf et al. (2024), 50-state mental health + physical condition presumptions through Dec 2022
+Primary: **IAFF Presumptive Health database** ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)) — all 50 states, actively maintained, scraped via `analysis/code/2_iaff_scrape.r`.
 
-The primary structured data lives in `data/processed/presumptive_laws.rds` and `website/data/presumptive_laws.json`. The JSON file is what the Shinylive app reads at runtime.
+Cross-check references (PDFs in `docs/lit/`, not tracked in git):
+- NCCI (2023) brief — ~38 NCCI-jurisdiction states, through Nov 2022
+- Brandt-Rauf et al. (2024), *JPHP* — 50-state inventory, through Dec 2022
+
+The active dataset is `data/processed/presumptive_laws_v2.rds` and `website/shiny-app/data/presumptive_laws.json`. The JSON is what the Shinylive app reads at runtime. Keep these in sync via the pipeline in `analysis/code/5_iaff_export_json.r`.
 
 ## Unit of Observation
-One row = one state × condition category (e.g., Texas × Cancer, Texas × Mental Health/PTSD).
+One row = one state × condition category × responder type (e.g., Texas × Cancer × Firefighter).
 
 ## Known Data Issues
-- NCCI brief covers only NCCI-jurisdiction states (~38 of 50); Brandt-Rauf covers all 50
-- Data current through late 2022; will need a defined update process for future versions
+- A small number of entries are flagged `needs_verification: true` where active status is uncertain (currently NY cancer and respiratory — see `data/raw/iaff_extracted/ny.json`)
 - Some states have partial or temporary coverage (executive orders, COVID-19 sunset provisions)
-- Brandt-Rauf Table 1 distinguishes Fire/EMS only; police coverage data comes primarily from NCCI
+- DC is present in the data but absent from the map (not in `maps::map("state")`)
 
 ## Data Sensitivity
 No restricted data. All sources are publicly available published reviews.
@@ -57,12 +59,16 @@ Not applicable.
 
 This is a research product, not a research paper. The standard paper pipeline (Writer, Peer Review, Submission) does not apply here.
 
-**Priority order for implementation:**
-1. Data extraction — extract Table 1 from Brandt-Rauf (2024) and the summary chart from the NCCI brief into a structured R data frame (`analysis/code/1_extract_data.r`)
-2. Data cleaning and JSON export — produce `website/data/presumptive_laws.json`
-3. Shinylive map prototype — basic US choropleth with condition-type filter
-4. Full website — landing page, about page, methodology note
+**Data update pipeline** (run in order after editing any state JSON in `data/raw/iaff_extracted/`):
+```
+Rscript analysis/code/4_iaff_combine.r
+Rscript analysis/code/5_iaff_export_json.r
+cp website/data/presumptive_laws.json website/shiny-app/data/presumptive_laws.json
+cd website && Rscript -e "shinylive::export('shiny-app', 'dashboard', overwrite=TRUE)"
+cd website && quarto render
+bash deploy.sh   # to push live to GitHub Pages
+```
 
-**Critical constraint:** The Shinylive app reads only from `website/data/presumptive_laws.json`. That file is the single source of truth for the dashboard. Keep it in sync with `data/processed/presumptive_laws.rds`.
+**Critical constraint:** The Shinylive app reads only from `website/shiny-app/data/presumptive_laws.json`. That file must be kept in sync with `data/processed/presumptive_laws_v2.rds` via the pipeline above.
 
 **Design principle:** Audience includes non-researchers. Plain language, minimal jargon. Every filter and label on the map should be self-explanatory without a methodology section.

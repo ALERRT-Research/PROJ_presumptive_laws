@@ -1,9 +1,11 @@
 # Project: PROJ_presumptive_laws
 # Script:  1_extract_data.r
-# Purpose: Hand-coded extraction of state-level presumptive WC law data from
-#          two published reviews. Produces master dataset + JSON for Shinylive.
+# Purpose: SUPERSEDED — original hand-coded extraction from two published
+#          academic reviews (Brandt-Rauf 2024; NCCI 2023). Kept for reference.
+#          Active data pipeline: scripts 2_iaff_scrape.r through 5_iaff_export_json.r
+#          Primary data source: IAFF Presumptive Health database (iaff.org/presumptive-health)
 #
-# Sources:
+# Original sources used in this script:
 #   A) Brandt-Rauf et al. (2024), J Public Health Policy 45:562-574
 #      Table 1 Part A + supplemental file (41271_2024_501_MOESM1_ESM.docx)
 #      50-state x 6-condition grid; data current through December 2022

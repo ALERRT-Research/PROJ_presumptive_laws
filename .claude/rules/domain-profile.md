@@ -10,8 +10,9 @@ Workers' compensation law / occupational health policy / first responder health
 - **Responder groups:** Laws vary in who they cover. Firefighters have the most coverage nationally; mental health presumptions are much rarer and typically cover a broader set of first responders.
 
 ## Primary data sources
-1. NCCI (2023) brief — WC presumptions in ~38 NCCI-jurisdiction states
-2. Brandt-Rauf et al. (2024) — 50-state WC presumption inventory, focus on mental health
+1. **IAFF Presumptive Health database** ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)) — all 50 states, actively maintained. This is the authoritative source for all app data.
+2. NCCI (2023) brief — cross-check reference, ~38 NCCI-jurisdiction states
+3. Brandt-Rauf et al. (2024) — cross-check reference, 50-state inventory, focus on mental health
 
 ## Audience assumptions
 This is not a research audience. Write all public-facing text (index.qmd, about.qmd, map labels, tooltips) at a general public reading level. Avoid legal jargon. Define terms on first use.

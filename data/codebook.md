@@ -1,9 +1,13 @@
 # Codebook: presumptive_laws
 
-**File:** `data/processed/presumptive_laws.rds`  
-**Exported to:** `website/data/presumptive_laws.json`  
-**Unit of observation:** One row = state × condition category  
-**Data current through:** 2022-12 (Brandt-Rauf 2024); 2022-11 (NCCI 2023)
+**Active file:** `data/processed/presumptive_laws_v2.rds`  
+**Exported to:** `website/shiny-app/data/presumptive_laws.json`  
+**Unit of observation:** One row = state × condition category × responder type  
+**Primary source:** IAFF Presumptive Health database ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/))  
+**Cross-check sources:** NCCI (2023) brief; Brandt-Rauf et al. (2024)  
+**Data retrieved:** 2026-05-23 (IAFF scrape)
+
+> Note: `presumptive_laws.rds` (v1) was an earlier hand-coded extraction from the two academic reviews. It has been superseded by `presumptive_laws_v2.rds`, which is built from the IAFF scrape pipeline.
 
 | Variable | Type | Values / Notes |
 |----------|------|----------------|

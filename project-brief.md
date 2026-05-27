@@ -11,11 +11,13 @@ What presumptive WC laws are currently in place for first responders across the 
 Research product (data visualization / policy resource). Not a human subjects study.
 
 ## Data Plan
-Starting from two published reviews:
+Primary source: the IAFF Presumptive Health database ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)), which covers all 50 states and is actively maintained. Data were extracted via scrape of the per-state IAFF pages (see `analysis/code/2_iaff_scrape.r`).
+
+Two published academic reviews were used to cross-check the IAFF extraction:
 1. NCCI (2023) brief — ~38 NCCI-jurisdiction states, WC presumptions through Nov 2022
 2. Brandt-Rauf et al. (2024), *Journal of Public Health Policy* — 50-state inventory of WC presumption laws, current through Dec 2022
 
-Future update sources TBD (IAFF tracking, NCCI updates, Westlaw legislative monitoring, state legislature websites).
+Future updates: re-run the IAFF scrape pipeline (`analysis/code/2_iaff_scrape.r` through `5_iaff_export_json.r`) and redeploy.
 
 ## Target Venue
 Standalone website linked from the ALERRT research site. Audience: policymakers and first responder families — accessible and intuitive presentation required.
@@ -27,7 +29,7 @@ Low pressure. Lightweight prototype first; no hard deadlines.
 Solo project (Peter Tanksley).
 
 ## Prior Work and Context
-Both source PDFs are in `docs/lit/`. The Brandt-Rauf (2024) Table 1 is the primary structured data source for the 50-state map. The NCCI brief provides additional detail on law restrictions, service requirements, and WC cost context.
+The IAFF Presumptive Health database is the primary data source. Two academic reviews (`docs/lit/`) were used for cross-checking during initial development: the NCCI (2023) brief and Brandt-Rauf et al. (2024). An early hand-coded extraction from those reviews (`analysis/code/1_extract_data.r`) has been superseded by the IAFF scrape pipeline.
 
 ## Funding
 [TBD: internal ALERRT or unfunded]
