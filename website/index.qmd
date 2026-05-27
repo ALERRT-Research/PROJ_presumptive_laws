@@ -1,0 +1,31 @@
+---
+title: "First Responder Presumptive Laws"
+---
+
+## What are presumptive laws?
+
+When a first responder is diagnosed with a serious illness — cancer, heart disease, PTSD — they typically must prove that their job caused it to receive workers' compensation benefits. **Presumptive laws shift that burden.** Under a presumptive law, the illness is *presumed* to be work-related, and the employer must prove otherwise.
+
+Coverage varies widely across the country: which conditions are covered, which responders are eligible, and how strong the protections are all differ by state. Keeping track of where things stand — and explaining it in plain terms — is harder than it should be.
+
+## About this app
+
+This is a **prototype** interactive dashboard developed by the [ALERRT Center](https://alerrt.org) at Texas State University. Our goal is to make information about first responder presumptive laws more accessible to the people who need it most: first responders, their families, union representatives, and policymakers trying to understand where their state stands relative to others.
+
+The underlying data come primarily from the [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/), which is maintained by the International Association of Fire Fighters and covers all 50 states. We've structured and mapped that information to make it easier to search and compare — but the IAFF pages are the authoritative source, and we link to them throughout the app.
+
+## About ALERRT
+
+The Advanced Law Enforcement Rapid Response Training (ALERRT) Center at Texas State University is a university-based research and training center focused on first responder readiness, training effectiveness, and health and wellness. ALERRT conducts applied research aimed at improving outcomes for first responders and the communities they serve.
+
+## How to use this app
+
+Navigate to the **[Dashboard](map.qmd)** to explore the data.
+
+- **Click a state** on the map to see all conditions covered in that state and which occupations are protected.
+- Use the **Occupation** mode to ask: *"Which conditions are covered for firefighters — and which states have the most comprehensive coverage?"*
+- Use the **Condition** mode to ask: *"Which states cover mental health / PTSD — and for which occupations?"*
+- The **table below the map** shows the details for whatever is selected: statute citations, service requirements, post-employment coverage, and notes.
+- **Hover** over bars in the chart to highlight corresponding states on the map. **Click** a bar to select those states.
+
+This is a prototype. If you notice an error or a law that has changed, see the [About](about.qmd) page for source information and methodology.

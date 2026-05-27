@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - data/
+    - dashboard/
+
+website:
+  title: "First Responder Presumptive Laws"
+  description: "An interactive guide to presumptive workers' compensation laws for first responders across the United States."
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: map.qmd
+        text: Dashboard
+    right:
+      - href: about.qmd
+        text: About
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false

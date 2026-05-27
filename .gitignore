@@ -1,0 +1,23 @@
+# Build artifacts — large, regenerated locally before each deploy
+website/_site/
+website/dashboard/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Renviron
+
+# Copyrighted PDFs — not for public distribution
+docs/lit/
+
+# Claude Code — local settings only (machine-specific paths, permissions)
+.claude/settings.local.json
+.claude/state/
+
+# macOS
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
