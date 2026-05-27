@@ -5,7 +5,7 @@
 
 set -e
 
-REPO_URL="https://github.com/ALERRT-Research/presumptive-laws.git"
+REPO_URL="https://github.com/ALERRT-Research/PROJ_presumptive_laws.git"
 
 echo "=== Step 1: Build Shinylive export ==="
 cd website
