@@ -1,0 +1,402 @@
+[
+  {
+    "state": "AL",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "AK",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "AZ",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "AR",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "CA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "CO",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": false,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "CT",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": true
+  },
+  {
+    "state": "DE",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "FL",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": true
+  },
+  {
+    "state": "GA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": false,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "HI",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "ID",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "IL",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "IN",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "IA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "KS",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "KY",
+    "phys_to_mental": true,
+    "mental_to_phys": false,
+    "mental_to_mental": false,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "LA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": false,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "ME",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MD",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": false,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MI",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": true
+  },
+  {
+    "state": "MN",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MS",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MO",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "MT",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": false,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NE",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NV",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NH",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": false,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NJ",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NM",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NY",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "NC",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "ND",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "OH",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": false,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "OK",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "OR",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "PA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "RI",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "SC",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "SD",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "TN",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": true
+  },
+  {
+    "state": "TX",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "UT",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "VT",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "VA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "WA",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "WV",
+    "phys_to_mental": true,
+    "mental_to_phys": false,
+    "mental_to_mental": false,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "WI",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  },
+  {
+    "state": "WY",
+    "phys_to_mental": true,
+    "mental_to_phys": true,
+    "mental_to_mental": true,
+    "volunteer_eligible": true,
+    "qualifying_events_req": false
+  }
+]
