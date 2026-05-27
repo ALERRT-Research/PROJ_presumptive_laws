@@ -2,6 +2,9 @@
 website/_site/
 website/dashboard/
 
+# Quarto build cache
+**/.quarto/
+
 # R
 .Rproj.user/
 .Rhistory
