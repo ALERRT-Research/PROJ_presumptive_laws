@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -40,10 +43,14 @@ jobs:
       - name: Install R packages
         run: |
           Rscript -e "
+            options(repos = c(
+              posit    = 'https://posit-dev.r-universe.dev',
+              cran     = 'https://cloud.r-project.org'
+            ))
             pkgs <- c('shinylive', 'shiny', 'bslib', 'dplyr', 'tidyr',
                       'jsonlite', 'leaflet', 'sf', 'DT', 'plotly')
             missing <- pkgs[!pkgs %in% installed.packages()[,'Package']]
-            if (length(missing)) install.packages(missing, repos = 'https://cloud.r-project.org')
+            if (length(missing)) install.packages(missing)
           "
 
       - name: Export Shinylive app
