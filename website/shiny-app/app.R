@@ -4,6 +4,7 @@ library(dplyr)
 library(tidyr)
 library(jsonlite)
 library(leaflet)
+library(sf)
 library(DT)
 library(plotly)
 
@@ -18,9 +19,10 @@ laws_raw$years_service_required               <- suppressWarnings(as.integer(law
 laws_raw$post_termination_months              <- suppressWarnings(as.integer(laws_raw$post_termination_months))
 
 # ── Map geometry ──────────────────────────────────────────────────────────────
+# One MULTIPOLYGON per state — HI, AK, VA etc. highlight as a unit.
 
-states_poly     <- readRDS("data/us_states_shifted.rds")
-poly_base_names <- gsub(":.*", "", states_poly$names)
+states_sf       <- readRDS("data/us_states_sf.rds")
+poly_base_names <- states_sf$state
 
 # ── Reference lookups ─────────────────────────────────────────────────────────
 
@@ -34,15 +36,15 @@ status_labels <- c(
 )
 
 occ_clrs <- c(
-  "#e8e8e8", "#fee5d9", "#fcbba1", "#fc9272",
-  "#fb6a4a", "#de2d26", "#a50f15"
+  "#e8e4dd", "#d4e4f0", "#a8c4d8", "#6b9ab8",
+  "#4a7fa5", "#2c5f80", "#1b2a4a"
 )
 
 status_clrs <- c(
-  statute = "#1d6fa5",
-  EO      = "#e07b00",
+  statute = "#1b2a4a",
+  EO      = "#e8a830",
   expired = "#b0b0b0",
-  none    = "#999999"
+  none    = "#c8c2b8"
 )
 
 # "all" must be first so it becomes the default selection
@@ -73,6 +75,26 @@ responder_labels <- c(
 )
 
 state_url_lu <- laws_raw |> distinct(state_name, state, iaff_url)
+
+# ── State tile grid ───────────────────────────────────────────────────────────
+
+state_abbrs_alpha <- c(
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+  "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+  "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+  "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+)
+
+tile_grid_html <- paste0(
+  '<div class="state-tiles-grid">',
+  paste(sapply(state_abbrs_alpha, function(abb) {
+    sprintf(
+      '<div class="state-tile" id="tile-%s" onclick="Shiny.setInputValue(\'tile_click\',\'%s\',{priority:\'event\'})" onmouseover="tileHoverOn(\'%s\')" onmouseout="tileHoverOff(\'%s\')">%s</div>',
+      abb, abb, abb, abb, abb)
+  }), collapse = ""),
+  '</div>'
+)
 
 # ── UpSet helpers ─────────────────────────────────────────────────────────────
 
@@ -256,7 +278,7 @@ make_upset_plot <- function(upset_data, groups, group_labels, source_id = "upset
     # Trace 0 — background connecting lines (all segments; colour updated by proxy)
     add_lines(
       x = ln_x, y = ln_y,
-      line       = list(color = "#2171b5", width = 3),
+      line       = list(color = "#4a7fa5", width = 3),
       xaxis = "x", yaxis = "y",
       hoverinfo = "none", showlegend = FALSE, name = "bg_lines"
     ) |>
@@ -264,7 +286,7 @@ make_upset_plot <- function(upset_data, groups, group_labels, source_id = "upset
     # Trace 1 — highlighted line (initially invisible NA; populated on column hover)
     add_lines(
       x = NA_real_, y = NA_real_,
-      line       = list(color = "#2171b5", width = 4),
+      line       = list(color = "#4a7fa5", width = 4),
       xaxis = "x", yaxis = "y",
       hoverinfo = "none", showlegend = FALSE, name = "hl_line"
     ) |>
@@ -281,7 +303,7 @@ make_upset_plot <- function(upset_data, groups, group_labels, source_id = "upset
     # Trace 3 — filled dots (colours/sizes updated by proxy on hover/select)
     add_markers(
       data = all_dots |> filter(filled), x = ~x, y = ~y,
-      marker = list(color = "#2171b5", size = 16,
+      marker = list(color = "#4a7fa5", size = 16,
                     line = list(color = "white", width = 3)),
       xaxis = "x", yaxis = "y",
       hoverinfo = "none", showlegend = FALSE
@@ -292,7 +314,7 @@ make_upset_plot <- function(upset_data, groups, group_labels, source_id = "upset
       x = x_pos, y = int_df$n,
       customdata = bar_customdata,
       hoverinfo  = "none",
-      marker = list(color = "#4292c6", line = list(color = "white", width = 0.5)),
+      marker = list(color = "#4a7fa5", line = list(color = "white", width = 0.5)),
       xaxis = "x", yaxis = "y2",
       showlegend = FALSE, name = "intersection"
     ) |>
@@ -301,7 +323,7 @@ make_upset_plot <- function(upset_data, groups, group_labels, source_id = "upset
     add_bars(
       x = set_n, y = y_pos, orientation = "h",
       hoverinfo = "none",
-      marker = list(color = "#9ecae1"),
+      marker = list(color = "#a8c4d8"),
       xaxis = "x2", yaxis = "y3",
       showlegend = FALSE, name = "setsize"
     ) |>
@@ -384,8 +406,123 @@ legend_occupation_html <- make_legend(
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 ui <- fluidPage(
-  theme = bs_theme(bootswatch = "cosmo"),
-  tags$style(HTML(".leaflet-container { background: #cfe2f3 !important; }")),
+  theme = bs_theme(
+    bootswatch = "cosmo",
+    primary    = "#1b2a4a",
+    secondary  = "#4a7fa5"
+  ),
+  tags$head(
+    tags$link(rel = "preconnect", href = "https://fonts.googleapis.com"),
+    tags$link(rel = "stylesheet",
+      href = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap"),
+    tags$script(HTML("
+      // ── Leaflet map accessor ────────────────────────────────────────────────
+      function getLeafletMap() {
+        var el = document.getElementById('map');
+        if (!el || !window.HTMLWidgets) return null;
+        var inst = HTMLWidgets.getInstance(el);
+        return inst ? (inst.map || (inst.getMap && inst.getMap())) : null;
+      }
+
+      // ── Tile hover → map polygon border (mirrors highlightOptions behavior) ──
+      function tileHoverOn(abb) {
+        var lmap = getLeafletMap();
+        if (!lmap) return;
+        lmap.eachLayer(function(layer) {
+          if (layer.options && layer.options.layerId === abb && layer.setStyle) {
+            layer.setStyle({ color: '#e8a830', weight: 2.5 });
+            layer.bringToFront();
+          }
+        });
+      }
+      function tileHoverOff(abb) {
+        var lmap = getLeafletMap();
+        if (!lmap) return;
+        lmap.eachLayer(function(layer) {
+          if (layer.options && layer.options.layerId === abb && layer.setStyle) {
+            layer.setStyle({ color: '#1a2a40', weight: 1.2 });
+          }
+        });
+      }
+
+      $(document).ready(function() {
+
+        // ── Map polygon hover → tile outline (via Shiny message) ─────────────
+        Shiny.addCustomMessageHandler('set_tile_hover', function(abb) {
+          document.querySelectorAll('.state-tile.tile-map-hover')
+            .forEach(function(el) { el.classList.remove('tile-map-hover'); });
+          if (abb) {
+            var el = document.getElementById('tile-' + abb);
+            if (el) el.classList.add('tile-map-hover');
+          }
+        });
+
+        // ── UpSet → map fill sync (stores fill color for tileHoverOff use) ───
+        Shiny.addCustomMessageHandler('update_tiles', function(msg) {
+          for (var abb in msg) {
+            var el = document.getElementById('tile-' + abb);
+            if (el) {
+              var c = msg[abb];
+              el.style.backgroundColor = c;
+              el.dataset.fillColor = c;
+              el.style.color = (c === '#e8a830') ? '#1b2a4a' : '#f7f4ef';
+            }
+          }
+        });
+
+        // ── UpSet mouseleave → reliable unhover (plotly_unhover is flaky) ────
+        $(document).on('shiny:bound', function(e) {
+          if (e.target.id === 'upset_plot') {
+            $(e.target).on('mouseleave', function() {
+              Shiny.setInputValue('upset_mouseleave', Date.now(), {priority: 'event'});
+            });
+          }
+        });
+
+      });
+    "))
+  ),
+  tags$style(HTML("
+    .leaflet-container { background: #1a2a40 !important; }
+    body, p, .shiny-text-output { font-family: 'Source Serif 4', Georgia, serif; }
+    h1, h2, h3, h4, h5,
+    .well label, .control-label, .radio label,
+    .nav-tabs .nav-link,
+    .selectize-input, .selectize-dropdown { font-family: 'Oswald', sans-serif !important; }
+    .well { border-radius: 0; border: 1px solid #d8d3cb; background: #f9f7f3; }
+    .nav-tabs .nav-link { letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.82rem; }
+    .nav-tabs .nav-link.active { border-top: 3px solid #1b2a4a; }
+    h1.shiny-title { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: #1b2a4a; }
+    .state-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 3px;
+      padding: 8px 0 10px 0;
+    }
+    .state-tile {
+      background-color: #3d5a73;
+      color: #f7f4ef;
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      padding: 5px 0;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background-color 0.12s ease;
+      user-select: none;
+      letter-spacing: 0.04em;
+    }
+    .state-tile:hover, .tile-map-hover { outline: 2px solid #e8a830; outline-offset: -1px; }
+    .state-tiles-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78em;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 4px;
+    }
+  ")),
   titlePanel("First Responder Presumptive Laws"),
 
   # ── Row 1: Controls (col 3) | UpSet plot / occupation legend (col 9) ──────
@@ -444,15 +581,20 @@ ui <- fluidPage(
     id = "main_tabs",
     tabPanel("Map",
       br(),
-      leafletOutput("map", height = "520px"),
-      br(),
-      uiOutput("stat_cards")
+      leafletOutput("map", height = "500px")
     ),
     tabPanel("State Details",
       br(),
       uiOutput("table_header"),
       DTOutput("detail_table")
     )
+  ),
+
+  # ── State tile picker (always visible, mirrors map fill state) ──────────────
+  div(
+    style = "margin-top: 10px;",
+    p("Select a state", class = "state-tiles-label"),
+    HTML(tile_grid_html)
   )
 )
 
@@ -551,7 +693,7 @@ server <- function(input, output, session) {
         mutate(
           popup_html = paste0(
             "<b style='font-size:1.05em;'>", state_name, "</b><br>",
-            "<span style='color:#2171b5;font-weight:600;'>",
+            "<span style='color:#4a7fa5;font-weight:600;'>",
             n_conditions, " condition type(s) covered</span>",
             "<br><span style='color:#444;font-size:0.88em;'>", grp_list, "</span>",
             "<br><span style='color:#aaa;font-size:0.75em;font-style:italic;'>",
@@ -652,44 +794,25 @@ server <- function(input, output, session) {
   })
 
   # ── Map fill logic ───────────────────────────────────────────────────────────
-  # Priority: hover (transient) > group selection (persistent) > neutral gray
+  # Fill changes only on UpSet interactions — not on map hover (which uses the
+  # instant JS-side highlightOptions border instead, avoiding Shiny roundtrip lag).
 
   map_fills <- reactive({
-    if (input$mode == "condition") {
-      hs  <- hover_states()
-      sg  <- selected_group()
-      si  <- selected_int_states()
-      if (!is.null(hs)) {
-        # Int bar hover: blue highlight
-        vapply(poly_base_names, function(abb) {
-          if (abb %in% hs) "#2171b5" else "#e0e0e0"
-        }, character(1), USE.NAMES = FALSE)
-      } else if (!is.null(sg) || !is.null(si)) {
-        # Any persistent selection: red highlight
-        sel <- c(sg, si)
-        vapply(poly_base_names, function(abb) {
-          if (abb %in% sel) "#c0392b" else "#e0e0e0"
-        }, character(1), USE.NAMES = FALSE)
-      } else {
-        rep("#d4d4d4", length(poly_base_names))
-      }
+    hs  <- hover_states()
+    sg  <- selected_group()
+    si  <- selected_int_states()
+
+    if (!is.null(hs)) {
+      vapply(poly_base_names, function(abb) {
+        if (abb %in% hs) "#e8a830" else "#3d5a73"
+      }, character(1), USE.NAMES = FALSE)
+    } else if (!is.null(sg) || !is.null(si)) {
+      sel <- c(sg, si)
+      vapply(poly_base_names, function(abb) {
+        if (abb %in% sel) "#d63b2f" else "#3d5a73"
+      }, character(1), USE.NAMES = FALSE)
     } else {
-      # Condition UpSet mode: binary highlight same as Occupation mode
-      hs  <- hover_states()
-      sg  <- selected_group()
-      si  <- selected_int_states()
-      if (!is.null(hs)) {
-        vapply(poly_base_names, function(abb) {
-          if (abb %in% hs) "#2171b5" else "#e0e0e0"
-        }, character(1), USE.NAMES = FALSE)
-      } else if (!is.null(sg) || !is.null(si)) {
-        sel <- c(sg, si)
-        vapply(poly_base_names, function(abb) {
-          if (abb %in% sel) "#c0392b" else "#e0e0e0"
-        }, character(1), USE.NAMES = FALSE)
-      } else {
-        rep("#d4d4d4", length(poly_base_names))
-      }
+      rep("#3d5a73", length(poly_base_names))
     }
   })
 
@@ -698,11 +821,12 @@ server <- function(input, output, session) {
   draw_polygons <- function(proxy_or_leaf, fills, popups) {
     proxy_or_leaf |>
       addPolygons(
+        data         = states_sf,
         fillColor    = fills,
-        fillOpacity  = 0.88,
-        color        = "white",
-        weight       = 0.9,
-        layerId      = states_poly$names,
+        fillOpacity  = 0.95,
+        color        = "#1a2a40",
+        weight       = 1.2,
+        layerId      = states_sf$state,
         popup        = popups,
         label        = lapply(popups, HTML),
         labelOptions = labelOptions(
@@ -710,35 +834,70 @@ server <- function(input, output, session) {
           direction = "auto"
         ),
         highlightOptions = highlightOptions(
-          weight = 2.5, color = "#333", fillOpacity = 0.97, bringToFront = TRUE
+          weight = 2.5, color = "#e8a830", bringToFront = TRUE
         )
       )
   }
 
   output$map <- renderLeaflet({
-    lf <- leaflet(data = states_poly,
-                  options = leafletOptions(zoomControl = FALSE, attributionControl = FALSE)) |>
-      setView(lng = -97, lat = 37, zoom = 4)
-    draw_polygons(lf, map_fills(), poly_popups())
+    leaflet(options = leafletOptions(
+      zoomControl        = FALSE,
+      attributionControl = FALSE,
+      scrollWheelZoom    = FALSE,
+      touchZoom          = FALSE,
+      doubleClickZoom    = FALSE,
+      boxZoom            = FALSE
+    )) |>
+      setView(lng = -97, lat = 37, zoom = 4) |>
+      draw_polygons(map_fills(), poly_popups())
   })
 
-  # Re-draw polygons whenever map_fills() changes
+  # Update polygon fills and tile colors whenever map_fills() changes.
+  # addPolygons with matching layerIds updates fills in place (no flash).
   observe({
-    leafletProxy("map", data = states_poly) |>
-      clearShapes() |>
-      draw_polygons(map_fills(), poly_popups())
+    fills  <- map_fills()
+    popups <- poly_popups()
+    session$sendCustomMessage("update_tiles", setNames(as.list(fills), poly_base_names))
+    leafletProxy("map") |>
+      draw_polygons(fills, popups)
   })
 
   # Map click → state details tab
   observeEvent(input$map_shape_click, {
     click <- input$map_shape_click
     if (!is.null(click) && !is.null(click$id)) {
-      abb <- gsub(":.*", "", click$id)
-      if (abb %in% laws_raw$state) {
-        selected_state(abb)
+      if (click$id %in% laws_raw$state) {
+        selected_state(click$id)
         updateTabsetPanel(session, "main_tabs", selected = "State Details")
       }
     }
+  })
+
+  # Tile click → state details tab (same flow as map click)
+  observeEvent(input$tile_click, {
+    abb <- input$tile_click
+    if (!is.null(abb) && abb %in% laws_raw$state) {
+      selected_state(abb)
+      updateTabsetPanel(session, "main_tabs", selected = "State Details")
+    }
+  })
+
+  # Map polygon hover → tile outline highlight
+  observeEvent(input$map_shape_mouseover, {
+    mid <- input$map_shape_mouseover$id
+    if (!is.null(mid)) session$sendCustomMessage("set_tile_hover", mid)
+  }, ignoreNULL = TRUE)
+
+  observeEvent(input$map_shape_mouseout, {
+    session$sendCustomMessage("set_tile_hover", NULL)
+  })
+
+  # UpSet mouseleave → clear transient hover (more reliable than plotly_unhover)
+  observeEvent(input$upset_mouseleave, {
+    if (!is.null(selected_grp_idx()) || !is.null(selected_int_idx())) return()
+    hover_states(NULL)
+    hover_int_idx(NULL)
+    hover_grp_idx(NULL)
   })
 
   # ── UpSet: bar hover → highlight states + dot column ─────────────────────────
@@ -838,16 +997,16 @@ server <- function(input, output, session) {
     # Priority: persistent selection (sint/row) > transient hover (col)
     if (sint_active) {
       in_sel  <- filled$x == sint_idx
-      dot_hl  <- "#c0392b"
+      dot_hl  <- "#d63b2f"
     } else if (row_active) {
       in_sel  <- filled$y == row_idx
-      dot_hl  <- "#c0392b"
+      dot_hl  <- "#d63b2f"
     } else if (col_active) {
       in_sel  <- filled$x == col_idx
-      dot_hl  <- "#2171b5"
+      dot_hl  <- "#4a7fa5"
     } else {
       in_sel  <- rep(TRUE, n_f)
-      dot_hl  <- "#2171b5"
+      dot_hl  <- "#4a7fa5"
     }
     colors  <- ifelse(in_sel, dot_hl, "#d0d0d0")
     sizes   <- ifelse(in_sel, 17L, 11L)
@@ -863,7 +1022,7 @@ server <- function(input, output, session) {
       )
 
     # ── Background line trace colour ──────────────────────────────────────────
-    bg_color <- if (col_active || row_active || sint_active) "#d0d0d0" else "#2171b5"
+    bg_color <- if (col_active || row_active || sint_active) "#d0d0d0" else "#4a7fa5"
     plotlyProxy("upset_plot", session) |>
       plotlyProxyInvoke("restyle",
         list("line.color" = bg_color, "line.width" = 3),
@@ -874,7 +1033,7 @@ server <- function(input, output, session) {
     # When sint_active: show selected column line in red
     # When col_active only: show hovered column line in blue
     hot_col   <- if (sint_active) sint_idx else if (col_active) col_idx else NULL
-    hot_color <- if (sint_active) "#c0392b" else "#2171b5"
+    hot_color <- if (sint_active) "#d63b2f" else "#4a7fa5"
     if (!is.null(hot_col) && nrow(line_df) > 0) {
       hot_df <- line_df[line_df$x == hot_col, , drop = FALSE]
       if (nrow(hot_df) > 0) {
@@ -919,14 +1078,14 @@ server <- function(input, output, session) {
     sg_idx <- selected_grp_idx()
     set_bar_colors <- if (!is.null(sg_idx)) {
       cols <- rep("#b0b0b0", n_grp)
-      cols[sg_idx] <- "#c0392b"
+      cols[sg_idx] <- "#d63b2f"
       cols
     } else if (!is.null(hgi)) {
       cols <- rep("#b0b0b0", n_grp)
-      cols[hgi] <- "#2171b5"
+      cols[hgi] <- "#4a7fa5"
       cols
     } else {
-      rep("#9ecae1", n_grp)
+      rep("#a8c4d8", n_grp)
     }
     plotlyProxy("upset_plot", session) |>
       plotlyProxyInvoke("restyle",
@@ -938,14 +1097,14 @@ server <- function(input, output, session) {
     # Priority: persistent selection (red) > transient hover (gray others) > neutral
     int_bar_colors <- if (!is.null(sint_idx)) {
       cols <- rep("#b0b0b0", n_int)
-      cols[sint_idx] <- "#c0392b"
+      cols[sint_idx] <- "#d63b2f"
       cols
     } else if (col_active) {
       cols <- rep("#b0b0b0", n_int)
-      cols[col_idx] <- "#2171b5"
+      cols[col_idx] <- "#4a7fa5"
       cols
     } else {
-      rep("#4292c6", n_int)
+      rep("#4a7fa5", n_int)
     }
     plotlyProxy("upset_plot", session) |>
       plotlyProxyInvoke("restyle",
@@ -1046,63 +1205,7 @@ server <- function(input, output, session) {
 
   # ── Stat cards ────────────────────────────────────────────────────────────────
 
-  output$stat_cards <- renderUI({
-    mk <- function(col, n, lbl) {
-      tags$div(
-        style = sprintf(
-          "flex:1;min-width:110px;padding:12px 14px;background:%s22;border-left:4px solid %s;border-radius:4px;",
-          col, col
-        ),
-        tags$div(style = sprintf("font-size:1.9em;font-weight:700;color:%s;", col), n),
-        tags$div(style = "font-size:0.82em;color:#555;", lbl)
-      )
-    }
-
-    if (input$mode == "condition") {
-      ud <- upset_data_r()
-      if (is.null(ud)) return(NULL)
-      ag           <- active_groups_r()
-      al           <- active_labels_r()
-      int_df       <- ud$int_df
-      n_states_any <- sum(int_df$n)
-      n_combos     <- nrow(int_df)
-      top_combo_n  <- int_df$n[1]
-      top_groups   <- paste(al[unlist(int_df[1, ag])], collapse = " + ")
-
-      tagList(
-        tags$div(
-          style = "display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px 0;",
-          mk("#2171b5", n_states_any, "states with any coverage"),
-          mk("#4292c6", n_combos,     "unique group combos"),
-          mk("#9ecae1", top_combo_n,  paste0("states: ", top_groups))
-        ),
-        tags$p(
-          style = "font-size:0.78em;color:#777;margin:6px 0 0 0;",
-          paste0("Showing: ", cond_label_r(),
-                 " — click any state for full details")
-        )
-      )
-
-    } else {
-      df       <- conds_per_state_occ()
-      n_any    <- nrow(df)
-      avg_c    <- if (n_any > 0) round(mean(df$n_conditions), 1) else 0
-      max_c    <- if (n_any > 0) max(df$n_conditions) else 0
-      rt_label <- if (input$responder_type == "all") "All occupations"
-                  else names(responder_choices)[responder_choices == input$responder_type]
-
-      tagList(
-        tags$div(
-          style = "display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px 0;",
-          mk("#2171b5", n_any, "states with any coverage"),
-          mk("#4292c6", avg_c, "avg conditions covered"),
-          mk("#9ecae1", max_c, "max conditions (one state)")
-        ),
-        tags$p(style = "font-size:0.78em;color:#777;margin:6px 0 0 0;",
-               paste0("Showing: ", rt_label, " — click any state for full details"))
-      )
-    }
-  })
+  # stat_cards removed
 
   # ── Detail table ──────────────────────────────────────────────────────────────
 

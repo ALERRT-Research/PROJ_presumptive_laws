@@ -1,1 +1,277 @@
-/* Placeholder for site-wide styles */
+/* ── CSS custom properties ────────────────────────────────────────────────── */
+:root {
+  --navy:        #1b2a4a;
+  --navy-dark:   #111d35;
+  --navy-light:  #2c3e6a;
+  --red:         #d63b2f;
+  --amber:       #e8a830;
+  --steel:       #4a7fa5;
+  --steel-light: #a8c4d8;
+  --off-white:   #f7f4ef;
+  --border:      #d8d3cb;
+  --text:        #1e2630;
+  --text-muted:  #6b7785;
+}
+
+/* ── Hero banner ─────────────────────────────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(150deg, var(--navy-dark) 55%, var(--navy-light) 100%);
+  color: white;
+  padding: 4rem 3rem 3.5rem;
+  margin: -1px -1px 0;         /* bleed edge-to-edge under the Quarto container */
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle diagonal texture */
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 24px,
+    rgba(255,255,255,0.018) 24px,
+    rgba(255,255,255,0.018) 25px
+  );
+  pointer-events: none;
+}
+
+/* red tab on the left */
+.hero-banner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--red);
+}
+
+.hero-kicker {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.9rem;
+  position: relative;
+}
+
+.hero-banner h1 {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif !important;
+  font-size: clamp(2rem, 5vw, 3.1rem) !important;
+  font-weight: 700 !important;
+  color: white !important;
+  line-height: 1.08 !important;
+  max-width: 620px;
+  margin-bottom: 1.3rem;
+  letter-spacing: 0.02em;
+  border: none !important;
+  padding: 0 !important;
+  position: relative;
+}
+
+.hero-lead {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.hero-cta {
+  display: inline-block;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--red);
+  color: white !important;
+  padding: 0.75rem 1.8rem;
+  text-decoration: none !important;
+  border: none;
+  transition: background 0.15s, transform 0.1s;
+  position: relative;
+}
+
+.hero-cta:hover {
+  background: #b8302a;
+  transform: translateY(-1px);
+}
+
+/* ── Stat bar ─────────────────────────────────────────────────────────────── */
+.stat-bar {
+  display: flex;
+  background: var(--navy);
+  padding: 0;
+  margin-bottom: 2.5rem;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 1.25rem 0.75rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-number {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--amber);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.55);
+  display: block;
+}
+
+/* ── Section intro text ────────────────────────────────────────────────────── */
+.section-intro {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  font-style: italic;
+  border-left: 4px solid var(--steel-light);
+  padding-left: 1rem;
+  margin: 1.5rem 0 2rem;
+  line-height: 1.65;
+}
+
+/* ── How-to cards ──────────────────────────────────────────────────────────── */
+.how-to-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 1.5rem 0 2rem;
+}
+
+.how-to-card {
+  background: white;
+  padding: 1.3rem 1.2rem;
+  position: relative;
+}
+
+.how-to-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--navy);
+}
+
+.card-num {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  display: block;
+  opacity: 0.7;
+}
+
+.how-to-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Prototype badge ───────────────────────────────────────────────────────── */
+.proto-badge {
+  display: inline-block;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--amber);
+  color: var(--navy-dark);
+  padding: 0.18rem 0.55rem;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 0.6rem;
+}
+
+/* ── Dashboard page wrapper ───────────────────────────────────────────────── */
+.dashboard-frame {
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--navy);
+  overflow: hidden;
+}
+
+.dashboard-label {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ── About page ────────────────────────────────────────────────────────────── */
+.source-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--steel);
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.source-card .source-name {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.source-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.disclaimer-box {
+  background: #fef8ec;
+  border: 1px solid #f0d98a;
+  border-left: 4px solid var(--amber);
+  padding: 1rem 1.2rem;
+  font-size: 0.9rem;
+  color: #5a4a1a;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero-banner { padding: 2.5rem 1.5rem 2.5rem; }
+  .stat-bar { flex-wrap: wrap; }
+  .stat-item { flex: 1 1 45%; }
+  .how-to-grid { grid-template-columns: 1fr; }
+}

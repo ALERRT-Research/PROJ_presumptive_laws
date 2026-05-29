@@ -1,31 +1,76 @@
 ---
 title: "First Responder Presumptive Laws"
+page-layout: full
 ---
 
-## What are presumptive laws?
+::: {.hero-banner}
+::: {.hero-kicker}
+ALERRT Center · Texas State University
+:::
 
-When a first responder is diagnosed with a serious illness — cancer, heart disease, PTSD — they typically must prove that their job caused it to receive workers' compensation benefits. **Presumptive laws shift that burden.** Under a presumptive law, the illness is *presumed* to be work-related, and the employer must prove otherwise.
+# When a First Responder<br>Gets Sick, Who Pays?
 
-Coverage varies widely across the country: which conditions are covered, which responders are eligible, and how strong the protections are all differ by state. Keeping track of where things stand — and explaining it in plain terms — is harder than it should be.
+::: {.hero-lead}
+Cancer. Heart disease. PTSD. First responders face these at higher rates than the general population — but getting workers' compensation often means proving your job caused it. **Presumptive laws shift that burden**, treating these illnesses as work-related by default. Coverage varies widely across all 50 states.
+:::
 
-## About this app
+[Explore the Dashboard →](map.qmd){.hero-cta}
+:::
 
-This is a **prototype** interactive dashboard developed by the [ALERRT Center](https://alerrt.org) at Texas State University. Our goal is to make information about first responder presumptive laws more accessible to the people who need it most: first responders, their families, union representatives, and policymakers trying to understand where their state stands relative to others.
+::: {.stat-bar}
+::: {.stat-item}
+[50]{.stat-number}
+[states covered]{.stat-label}
+:::
+::: {.stat-item}
+[6]{.stat-number}
+[condition types]{.stat-label}
+:::
+::: {.stat-item}
+[5]{.stat-number}
+[occupations tracked]{.stat-label}
+:::
+::: {.stat-item}
+[400+]{.stat-number}
+[law entries]{.stat-label}
+:::
+:::
 
-The underlying data come primarily from the [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/), which is maintained by the International Association of Fire Fighters and covers all 50 states. We've structured and mapped that information to make it easier to search and compare — but the IAFF pages are the authoritative source, and we link to them throughout the app.
+## What is a presumptive law?
 
-## About ALERRT
+Under standard workers' compensation rules, a sick first responder must demonstrate that their specific job directly caused their illness — a nearly impossible bar for diseases like cancer or heart disease that develop over years. A **presumptive law** eliminates that requirement: the illness is *presumed* to be work-related, and the burden falls on the employer to prove otherwise.
 
-The Advanced Law Enforcement Rapid Response Training (ALERRT) Center at Texas State University is a university-based research and training center focused on first responder readiness, training effectiveness, and health and wellness. ALERRT conducts applied research aimed at improving outcomes for first responders and the communities they serve.
+Most presumptions are *rebuttable* — the employer can present contradicting evidence. A small number are *irrebuttable*, meaning the link is conclusive regardless of other evidence. Coverage also depends on which conditions are listed in the statute, which occupations qualify, how many years of service are required, and whether there's a post-retirement window.
+
+::: {.section-intro}
+Keeping track of where these protections exist — and what they actually cover — is harder than it should be. This dashboard is an attempt to fix that.
+:::
 
 ## How to use this app
 
-Navigate to the **[Dashboard](map.qmd)** to explore the data.
+::: {.how-to-grid}
+::: {.how-to-card}
+[01]{.card-num}
+**Pick a mode.** Use *Occupation* to ask which conditions are covered for a specific responder type. Use *Condition* to ask which states cover a specific illness — and for whom.
+:::
+::: {.how-to-card}
+[02]{.card-num}
+**Read the chart.** The intersection diagram shows how many states cover each combination of responder groups. Hover a bar to see which states; click to lock the selection.
+:::
+::: {.how-to-card}
+[03]{.card-num}
+**Click the map.** Selecting a state opens a detailed table of all laws on record — statute citations, service requirements, post-employment coverage, and notes.
+:::
+::: {.how-to-card}
+[04]{.card-num}
+**Verify before acting.** Laws change. Always confirm current status with a qualified attorney or your state's workers' compensation board.
+:::
+:::
 
-- **Click a state** on the map to see all conditions covered in that state and which occupations are protected.
-- Use the **Occupation** mode to ask: *"Which conditions are covered for firefighters — and which states have the most comprehensive coverage?"*
-- Use the **Condition** mode to ask: *"Which states cover mental health / PTSD — and for which occupations?"*
-- The **table below the map** shows the details for whatever is selected: statute citations, service requirements, post-employment coverage, and notes.
-- **Hover** over bars in the chart to highlight corresponding states on the map. **Click** a bar to select those states.
+## About this project
 
-This is a prototype. If you notice an error or a law that has changed, see the [About](about.qmd) page for source information and methodology.
+This dashboard was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.
+
+The underlying data come from the [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/), maintained by the International Association of Fire Fighters. We've structured and mapped that information to make it easier to search and compare — but the IAFF pages remain the authoritative source. See the [About](about.qmd) page for full methodology and citation.
+
+<span class="proto-badge">Prototype</span> This is an early-stage research tool. If you notice an error or a law that has changed, the [About](about.qmd) page explains how to interpret the data.

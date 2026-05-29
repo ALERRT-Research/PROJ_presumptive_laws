@@ -4,27 +4,41 @@ title: "About"
 
 ## Data sources
 
-The primary source for this dashboard is the **IAFF Presumptive Health database**, maintained by the International Association of Fire Fighters ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)). The IAFF tracks presumptive workers' compensation laws for first responders across all 50 states and publishes a regularly updated summary page for each state, including statute citations, covered conditions, and links to the underlying law.
+::: {.source-card}
+[Primary source]{.source-name}
+**IAFF Presumptive Health database** — [iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)
 
-This dashboard is essentially a structured, map-based interface for the information the IAFF has already compiled. We have not independently verified the legal text of each statute. Users who need authoritative information should consult the IAFF source pages directly — each state entry in the data table links to the corresponding IAFF page.
+Maintained by the International Association of Fire Fighters, this database covers presumptive workers' compensation laws for first responders in all 50 states. Each state page includes statute citations, covered conditions, covered occupations, and links to the underlying law. This dashboard is essentially a structured, map-based interface for the information the IAFF has compiled. We have not independently verified the legal text of each statute.
+:::
 
-Two published academic reviews were used to cross-check the initial data extraction and fill gaps not covered by the IAFF pages:
+::: {.source-card}
+[Cross-check reference]{.source-name}
+Neugent, K., & Spidell, B. (2023). *Firefighters and first responders: 2023 update on presumptive workers comp benefits.* National Council on Compensation Insurance (NCCI).
 
-- Neugent, K., & Spidell, B. (2023). *Firefighters and first responders: 2023 update on presumptive workers comp benefits.* National Council on Compensation Insurance (NCCI). Covers approximately 38 NCCI-jurisdiction states; data current through November 2022.
-- Brandt-Rauf, S., Davis, A. L., & Taylor, J. A. (2024). Inventory of state workers' compensation laws in the United States: first responder mental health. *Journal of Public Health Policy*, 45, 562–574. 50-state inventory using the Westlaw legal database; data current through December 2022.
+Covers approximately 38 NCCI-jurisdiction states; data current through November 2022. Used to cross-check IAFF data for covered states during initial extraction.
+:::
+
+::: {.source-card}
+[Cross-check reference]{.source-name}
+Brandt-Rauf, S., Davis, A. L., & Taylor, J. A. (2024). Inventory of state workers' compensation laws in the United States: first responder mental health. *Journal of Public Health Policy*, 45, 562–574.
+
+50-state inventory using the Westlaw legal database; data current through December 2022. Used to supplement IAFF data for mental health / PTSD coverage, which is less consistently documented in other sources.
+:::
 
 ## Methodology
 
-For each state, IAFF source pages were reviewed and law attributes — condition covered, occupations covered, statute citation, service requirements, post-employment coverage, and related restrictions — were coded into a structured dataset. Each row represents one state × condition × occupation combination.
+For each state, IAFF source pages were reviewed and law attributes — condition covered, occupations covered, statute citation, service requirements, post-employment coverage, and restrictions — were coded into a structured dataset. Each row represents one state × condition category × occupation combination.
 
-Where the IAFF source characterized a provision as historical or inactive, that status is reflected in the data. A small number of entries are flagged for independent verification where the active status of a statute is uncertain (marked with * in the Notes column of the data table).
+Where the IAFF source characterized a provision as historical or inactive, that status is reflected in the data. A small number of entries are flagged with **\*** in the Notes column where the active status of a statute is uncertain.
 
+::: {.disclaimer-box}
 **Data currency:** The IAFF database is actively maintained, but this dashboard reflects a point-in-time extraction. Laws change. Always verify current status with a qualified attorney or your state's workers' compensation board before relying on this resource for legal or financial decisions.
+:::
 
 ## About ALERRT
 
-This resource was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts research on first responder training, health, and wellness.
+This resource was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts research on first responder training, health, and wellness, with a focus on improving outcomes for first responders and the communities they serve.
 
 ## Suggested citation
 
-Tanksley, P. T. (*year*). *First Responder Presumptive Laws Dashboard.* ALERRT Center, Texas State University. [URL]
+Tanksley, P. T. (*year*). *First Responder Presumptive Laws Dashboard.* ALERRT Center, Texas State University. https://alerrt-research.github.io/PROJ_presumptive_laws/

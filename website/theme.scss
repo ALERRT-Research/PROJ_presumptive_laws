@@ -1,0 +1,112 @@
+/*-- scss:defaults --*/
+
+// ── Fonts ───────────────────────────────────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap');
+
+$font-family-base:      'Source Serif 4', Georgia, "Times New Roman", serif;
+$headings-font-family:  'Oswald', 'Arial Narrow', sans-serif;
+$font-size-base:        1rem;
+$line-height-base:      1.68;
+
+// ── Palette ─────────────────────────────────────────────────────────────────
+$navy-dark:   #111d35;
+$navy:        #1b2a4a;
+$navy-light:  #2c3e6a;
+$red:         #d63b2f;
+$amber:       #e8a830;
+$steel:       #4a7fa5;
+$steel-light: #a8c4d8;
+$off-white:   #f7f4ef;
+$border-col:  #d8d3cb;
+
+// ── Bootstrap overrides ─────────────────────────────────────────────────────
+$primary:              $navy;
+$secondary:            $steel;
+$body-bg:              $off-white;
+$body-color:           #1e2630;
+$headings-color:       $navy;
+$link-color:           $steel;
+$link-hover-color:     $navy;
+
+$navbar-bg:            $navy-dark;
+$navbar-fg:            rgba(255,255,255,0.85);
+$navbar-hl:            white;
+
+$border-color:         $border-col;
+$border-radius:        0px;
+$border-radius-sm:     0px;
+$border-radius-lg:     0px;
+
+/*-- scss:rules --*/
+
+// ── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 3px solid $red !important;
+  padding: 0.45rem 1.5rem;
+}
+
+.navbar-brand {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: white !important;
+  padding: 0.3rem 0;
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75) !important;
+  transition: color 0.15s ease;
+  padding: 0.5rem 0.85rem !important;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: white !important;
+}
+
+// ── Headings ─────────────────────────────────────────────────────────────────
+h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: 0.01em; }
+h2 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid $border-col;
+  padding-bottom: 0.45rem;
+  margin-top: 2.2rem;
+  margin-bottom: 1rem;
+}
+h3 { font-size: 1.1rem; font-weight: 600; color: #2a3a50; }
+
+// ── Body ─────────────────────────────────────────────────────────────────────
+p { margin-bottom: 1.1rem; }
+strong { font-weight: 600; }
+
+a { text-decoration: underline; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+// ── Quarto content column ────────────────────────────────────────────────────
+.quarto-container, #quarto-content {
+  max-width: 960px;
+}
+
+// ── Footer ───────────────────────────────────────────────────────────────────
+.nav-footer {
+  background-color: $navy-dark !important;
+  border-top: none !important;
+  color: rgba(255,255,255,0.45) !important;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1rem 1.5rem;
+}
+
+.nav-footer a { color: rgba(255,255,255,0.55) !important; }
+.nav-footer a:hover { color: rgba(255,255,255,0.85) !important; }
