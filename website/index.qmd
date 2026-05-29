@@ -14,7 +14,7 @@ ALERRT Center · Texas State University
 Cancer. Heart disease. PTSD. First responders face these at higher rates than the general population — but getting workers' compensation often means proving your job caused it. **Presumptive laws shift that burden**, treating these illnesses as work-related by default. Coverage varies widely across all 50 states.
 :::
 
-[Explore the Dashboard →](map.qmd){.hero-cta}
+[Open the Coverage Map →](coverage-map.qmd){.hero-cta}
 :::
 
 ::: {.stat-bar}
@@ -43,7 +43,7 @@ Under standard workers' compensation rules, a sick first responder must demonstr
 Most presumptions are *rebuttable* — the employer can present contradicting evidence. A small number are *irrebuttable*, meaning the link is conclusive regardless of other evidence. Coverage also depends on which conditions are listed in the statute, which occupations qualify, how many years of service are required, and whether there's a post-retirement window.
 
 ::: {.section-intro}
-Keeping track of where these protections exist — and what they actually cover — is harder than it should be. This dashboard is an attempt to fix that.
+Keeping track of where these protections exist — and what they actually cover — is harder than it should be. The Coverage Map is an attempt to fix that.
 :::
 
 ## How to use this app
@@ -69,7 +69,7 @@ Keeping track of where these protections exist — and what they actually cover 
 
 ## About this project
 
-This dashboard was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.
+The Coverage Map was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.
 
 The underlying data come from the [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/), maintained by the International Association of Fire Fighters. We've structured and mapped that information to make it easier to search and compare — but the IAFF pages remain the authoritative source. See the [About](about.qmd) page for full methodology and citation.
 

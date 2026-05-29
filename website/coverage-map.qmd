@@ -1,0 +1,35 @@
+---
+title: "Coverage Map"
+page-layout: full
+---
+
+<span class="coverage-map-label">First Responder Presumptive Laws — Coverage Map</span>
+
+<div class="loading-notice" id="loading-notice">First visit? This app runs entirely in your browser — it may take up to a minute to initialize while R packages load in the background.</div>
+
+::: {.coverage-map-frame}
+<iframe
+  id="coverage-map-frame"
+  src="app/index.html"
+  style="width:100%; height:1100px; border:none; display:block;"
+  title="First Responder Presumptive Laws Coverage Map">
+</iframe>
+:::
+
+<script>
+(function () {
+  var notice = document.getElementById('loading-notice');
+  if (localStorage.getItem('coverageMapLoaded')) {
+    notice.style.display = 'none';
+    return;
+  }
+  document.getElementById('coverage-map-frame').addEventListener('load', function () {
+    setTimeout(function () {
+      localStorage.setItem('coverageMapLoaded', '1');
+      notice.style.transition = 'opacity 0.6s ease';
+      notice.style.opacity = '0';
+      setTimeout(function () { notice.style.display = 'none'; }, 650);
+    }, 8000);
+  });
+})();
+</script>

@@ -58,7 +58,7 @@ jobs:
 
       - name: Export Shinylive app
         working-directory: website
-        run: Rscript -e "shinylive::export('shiny-app', 'dashboard', overwrite=TRUE)"
+        run: Rscript -e "shinylive::export('shiny-app', 'app', overwrite=TRUE)"
 
       - name: Render Quarto site
         working-directory: website

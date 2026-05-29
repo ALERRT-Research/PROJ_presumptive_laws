@@ -64,7 +64,7 @@ This is a research product, not a research paper. The standard paper pipeline (W
 Rscript analysis/code/4_iaff_combine.r
 Rscript analysis/code/5_iaff_export_json.r
 cp website/data/presumptive_laws.json website/shiny-app/data/presumptive_laws.json
-cd website && Rscript -e "shinylive::export('shiny-app', 'dashboard', overwrite=TRUE)"
+cd website && Rscript -e "shinylive::export('shiny-app', 'app', overwrite=TRUE)"
 cd website && quarto render
 bash deploy.sh   # to push live to GitHub Pages
 ```

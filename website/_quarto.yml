@@ -3,7 +3,7 @@ project:
   output-dir: _site
   resources:
     - data/
-    - dashboard/
+    - app/
 
 website:
   title: "First Responder Presumptive Laws"
@@ -12,8 +12,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: map.qmd
-        text: Dashboard
+      - href: coverage-map.qmd
+        text: Coverage Map
     right:
       - href: about.qmd
         text: About

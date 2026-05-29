@@ -493,11 +493,24 @@ ui <- fluidPage(
     .nav-tabs .nav-link { letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.82rem; }
     .nav-tabs .nav-link.active { border-top: 3px solid #1b2a4a; }
     h1.shiny-title { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: #1b2a4a; }
+    .map-with-tiles {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .tiles-sidebar {
+      flex-shrink: 0;
+      width: 120px;
+      display: flex;
+      flex-direction: column;
+    }
     .state-tiles-grid {
       display: grid;
-      grid-template-columns: repeat(10, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 3px;
-      padding: 8px 0 10px 0;
+      flex: 1;
+      align-content: stretch;
+      padding: 4px 0 0 0;
     }
     .state-tile {
       background-color: #3d5a73;
@@ -522,11 +535,15 @@ ui <- fluidPage(
       letter-spacing: 0.07em;
       margin-bottom: 4px;
     }
+    @media (max-width: 768px) {
+      .app-main-layout { flex-direction: column; }
+      .tiles-sidebar { width: 100%; position: static; }
+      .state-tiles-grid { grid-template-columns: repeat(10, 1fr); }
+    }
   ")),
   titlePanel("First Responder Presumptive Laws"),
 
-  # ── Row 1: Controls (col 3) | UpSet plot / occupation legend (col 9) ──────
-  # display:flex + align-items:stretch makes both columns the same height
+  # ── Row 1: Controls (col 3) | UpSet plot (col 9) ──────────────────────────
   div(
     class = "row",
     style = "display:flex; align-items:stretch; margin-bottom:15px;",
@@ -569,32 +586,34 @@ ui <- fluidPage(
     div(
       class = "col-sm-9",
       style = "display:flex; flex-direction:column;",
-      # Both modes now show the UpSet plot
       div(style = "flex:1; min-height:0;",
         plotlyOutput("upset_plot", height = "100%")
       )
     )
   ),
 
-  # ── Row 2: Tabs — Map (full width) | State Details ────────────────────────
+  # ── Row 2: Tabs — Map (tiles + map side by side) | State Details ──────────
   tabsetPanel(
     id = "main_tabs",
     tabPanel("Map",
       br(),
-      leafletOutput("map", height = "500px")
+      div(
+        class = "map-with-tiles",
+        div(
+          class = "tiles-sidebar",
+          p("Select a state", class = "state-tiles-label"),
+          HTML(tile_grid_html)
+        ),
+        div(style = "flex:1; min-width:0;",
+          leafletOutput("map", height = "500px")
+        )
+      )
     ),
     tabPanel("State Details",
       br(),
       uiOutput("table_header"),
       DTOutput("detail_table")
     )
-  ),
-
-  # ── State tile picker (always visible, mirrors map fill state) ──────────────
-  div(
-    style = "margin-top: 10px;",
-    p("Select a state", class = "state-tiles-label"),
-    HTML(tile_grid_html)
   )
 )
 

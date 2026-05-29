@@ -9,7 +9,7 @@ REPO_URL="https://github.com/ALERRT-Research/PROJ_presumptive_laws.git"
 
 echo "=== Step 1: Build Shinylive export ==="
 cd website
-Rscript -e "shinylive::export('shiny-app', 'dashboard', overwrite=TRUE)"
+Rscript -e "shinylive::export('shiny-app', 'app', overwrite=TRUE)"
 
 echo ""
 echo "=== Step 2: Render Quarto site ==="
