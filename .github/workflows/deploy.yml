@@ -38,7 +38,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev libssl-dev
+          sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev libssl-dev libuv1-dev
 
       - name: Install R packages
         run: |
