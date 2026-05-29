@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "First Responder Presumptive Laws",
     "section": "",
-    "text": "ALERRT Center · Texas State University\n\n\n\n\nCancer. Heart disease. PTSD. First responders face these at higher rates than the general population — but getting workers’ compensation often means proving your job caused it. Presumptive laws shift that burden, treating these illnesses as work-related by default. Coverage varies widely across all 50 states.\n\nExplore the Dashboard →"
+    "text": "ALERRT Center · Texas State University\n\n\n\n\nCancer. Heart disease. PTSD. First responders face these at higher rates than the general population — but getting workers’ compensation often means proving your job caused it. Presumptive laws shift that burden, treating these illnesses as work-related by default. Coverage varies widely across all 50 states.\n\nOpen the Coverage Map →"
   },
   {
     "objectID": "index.html#what-is-a-presumptive-law",
     "href": "index.html#what-is-a-presumptive-law",
     "title": "First Responder Presumptive Laws",
     "section": "What is a presumptive law?",
-    "text": "What is a presumptive law?\nUnder standard workers’ compensation rules, a sick first responder must demonstrate that their specific job directly caused their illness — a nearly impossible bar for diseases like cancer or heart disease that develop over years. A presumptive law eliminates that requirement: the illness is presumed to be work-related, and the burden falls on the employer to prove otherwise.\nMost presumptions are rebuttable — the employer can present contradicting evidence. A small number are irrebuttable, meaning the link is conclusive regardless of other evidence. Coverage also depends on which conditions are listed in the statute, which occupations qualify, how many years of service are required, and whether there’s a post-retirement window.\n\nKeeping track of where these protections exist — and what they actually cover — is harder than it should be. This dashboard is an attempt to fix that."
+    "text": "What is a presumptive law?\nUnder standard workers’ compensation rules, a sick first responder must demonstrate that their specific job directly caused their illness — a nearly impossible bar for diseases like cancer or heart disease that develop over years. A presumptive law eliminates that requirement: the illness is presumed to be work-related, and the burden falls on the employer to prove otherwise.\nMost presumptions are rebuttable — the employer can present contradicting evidence. A small number are irrebuttable, meaning the link is conclusive regardless of other evidence. Coverage also depends on which conditions are listed in the statute, which occupations qualify, how many years of service are required, and whether there’s a post-retirement window.\n\nKeeping track of where these protections exist — and what they actually cover — is harder than it should be. The Coverage Map is an attempt to fix that."
   },
   {
     "objectID": "index.html#how-to-use-this-app",
@@ -25,7 +25,14 @@
     "href": "index.html#about-this-project",
     "title": "First Responder Presumptive Laws",
     "section": "About this project",
-    "text": "About this project\nThis dashboard was developed by the ALERRT Center at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.\nThe underlying data come from the IAFF Presumptive Health database, maintained by the International Association of Fire Fighters. We’ve structured and mapped that information to make it easier to search and compare — but the IAFF pages remain the authoritative source. See the About page for full methodology and citation.\nPrototype This is an early-stage research tool. If you notice an error or a law that has changed, the About page explains how to interpret the data."
+    "text": "About this project\nThe Coverage Map was developed by the ALERRT Center at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.\nThe underlying data come from the IAFF Presumptive Health database, maintained by the International Association of Fire Fighters. We’ve structured and mapped that information to make it easier to search and compare — but the IAFF pages remain the authoritative source. See the About page for full methodology and citation.\nPrototype This is an early-stage research tool. If you notice an error or a law that has changed, the About page explains how to interpret the data."
+  },
+  {
+    "objectID": "coverage-map.html",
+    "href": "coverage-map.html",
+    "title": "Coverage Map",
+    "section": "",
+    "text": "First Responder Presumptive Laws — Coverage Map\n\nFirst visit? This app runs entirely in your browser — it may take up to a minute to initialize while R packages load in the background."
   },
   {
     "objectID": "about.html",
@@ -61,12 +68,5 @@
     "title": "About",
     "section": "Suggested citation",
     "text": "Suggested citation\nTanksley, P. T. (year). First Responder Presumptive Laws Dashboard. ALERRT Center, Texas State University. https://alerrt-research.github.io/PROJ_presumptive_laws/"
-  },
-  {
-    "objectID": "map.html",
-    "href": "map.html",
-    "title": "Dashboard",
-    "section": "",
-    "text": "First Responder Presumptive Laws — Interactive Map"
   }
 ]
