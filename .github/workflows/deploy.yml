@@ -1,0 +1,65 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+          use-public-rspm: true
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: r-${{ hashFiles('website/shiny-app/app.R') }}
+          restore-keys: r-
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev libssl-dev
+
+      - name: Install R packages
+        run: |
+          Rscript -e "
+            pkgs <- c('shinylive', 'shiny', 'bslib', 'dplyr', 'tidyr',
+                      'jsonlite', 'leaflet', 'sf', 'DT', 'plotly')
+            missing <- pkgs[!pkgs %in% installed.packages()[,'Package']]
+            if (length(missing)) install.packages(missing, repos = 'https://cloud.r-project.org')
+          "
+
+      - name: Export Shinylive app
+        working-directory: website
+        run: Rscript -e "shinylive::export('shiny-app', 'dashboard', overwrite=TRUE)"
+
+      - name: Render Quarto site
+        working-directory: website
+        run: quarto render
+
+      - name: Add .nojekyll
+        run: touch website/_site/.nojekyll
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: website/_site
+          branch: gh-pages
+          clean: true
