@@ -42,15 +42,16 @@ jobs:
 
       - name: Install R packages
         run: |
+          Rscript -e "install.packages('pak', repos = 'https://cloud.r-project.org')"
           Rscript -e "
             options(repos = c(
-              posit    = 'https://posit-dev.r-universe.dev',
-              cran     = 'https://cloud.r-project.org'
+              posit = 'https://posit-dev.r-universe.dev',
+              cran  = 'https://cloud.r-project.org'
             ))
-            pkgs <- c('shinylive', 'shiny', 'bslib', 'dplyr', 'tidyr',
-                      'jsonlite', 'leaflet', 'sf', 'DT', 'plotly')
-            missing <- pkgs[!pkgs %in% installed.packages()[,'Package']]
-            if (length(missing)) install.packages(missing)
+            pak::pak(c(
+              'shinylive', 'shiny', 'bslib', 'dplyr', 'tidyr',
+              'jsonlite', 'leaflet', 'sf', 'DT', 'plotly'
+            ))
           "
 
       - name: Export Shinylive app
