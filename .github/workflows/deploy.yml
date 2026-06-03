@@ -3,6 +3,9 @@ name: Build and Deploy
 on:
   push:
     branches: [main]
+    paths:
+      - 'website/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:
@@ -35,13 +38,22 @@ jobs:
           key: r-${{ hashFiles('website/shiny-app/app.R') }}
           restore-keys: r-
 
+      - name: Cache Shinylive export
+        id: cache-shinylive
+        uses: actions/cache@v4
+        with:
+          path: website/app
+          key: shinylive-${{ hashFiles('website/shiny-app/app.R', 'website/shiny-app/data/**') }}
+
       - name: Install system dependencies
+        if: steps.cache-shinylive.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev libssl-dev \
             libcurl4-openssl-dev libxml2-dev libuv1-dev libarchive-dev
 
       - name: Install R packages
+        if: steps.cache-shinylive.outputs.cache-hit != 'true'
         run: |
           Rscript -e "
             options(repos = c(
@@ -57,6 +69,7 @@ jobs:
           "
 
       - name: Export Shinylive app
+        if: steps.cache-shinylive.outputs.cache-hit != 'true'
         working-directory: website
         run: Rscript -e "shinylive::export('shiny-app', 'app', overwrite=TRUE)"
 
