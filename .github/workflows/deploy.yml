@@ -53,6 +53,8 @@ jobs:
 
       - name: Install R packages
         if: steps.cache-shinylive.outputs.cache-hit != 'true'
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Rscript -e "
             options(repos = c(
