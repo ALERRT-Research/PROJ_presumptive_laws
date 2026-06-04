@@ -42,7 +42,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: website/app
-          key: shinylive-${{ hashFiles('website/shiny-app/app.R', 'website/shiny-app/data/**') }}
+          key: shinylive-v0.4.1-${{ hashFiles('website/shiny-app/app.R', 'website/shiny-app/data/**') }}
 
       - name: Install system dependencies
         if: steps.cache-shinylive.outputs.cache-hit != 'true'
@@ -56,14 +56,14 @@ jobs:
         run: |
           Rscript -e "
             options(repos = c(
-              posit = 'https://posit-dev.r-universe.dev',
-              RSPM  = 'https://packagemanager.posit.co/cran/__linux__/noble/latest',
-              CRAN  = 'https://cloud.r-project.org'
+              RSPM = 'https://packagemanager.posit.co/cran/__linux__/noble/latest',
+              CRAN = 'https://cloud.r-project.org'
             ))
-            pkgs <- c('shinylive', 'shiny', 'bslib', 'dplyr', 'tidyr',
+            pkgs <- c('remotes', 'shiny', 'bslib', 'dplyr', 'tidyr',
                       'jsonlite', 'leaflet', 'sf', 'DT', 'plotly')
             install.packages(pkgs)
-            missing <- pkgs[!pkgs %in% installed.packages()[,'Package']]
+            remotes::install_github('posit-dev/r-shinylive@v0.4.1', quiet = TRUE)
+            missing <- c(pkgs, 'shinylive')[!c(pkgs, 'shinylive') %in% installed.packages()[,'Package']]
             if (length(missing)) stop('Failed to install: ', paste(missing, collapse = ', '))
           "
 
