@@ -26,13 +26,24 @@ poly_base_names <- states_sf$state
 
 # ── Reference lookups ─────────────────────────────────────────────────────────
 
-type_priority <- c(statute = 4L, EO = 3L, expired = 2L, none = 1L)
+type_priority <- c(
+  statute          = 5L,
+  EO               = 4L,
+  pension          = 3L,
+  employer_benefit = 3L,
+  lodd_only        = 2L,
+  expired          = 1L,
+  none             = 0L
+)
 
 status_labels <- c(
-  statute = "Active statute",
-  EO      = "Executive order",
-  expired = "Expired / lapsed",
-  none    = "No law found"
+  statute          = "Active statute (WC presumption)",
+  EO               = "Executive order",
+  pension          = "Pension / retirement benefit (not WC)",
+  employer_benefit = "Employer benefit (not WC)",
+  lodd_only        = "Death benefit only — LODD (not WC)",
+  expired          = "Expired / lapsed",
+  none             = "No law found"
 )
 
 occ_clrs <- c(
@@ -40,11 +51,17 @@ occ_clrs <- c(
   "#4a7fa5", "#2c5f80", "#1b2a4a"
 )
 
+# medium brand blue for non-WC benefit types (recedes behind WC orange)
+NON_WC_CLR <- "#6b9ab8"
+
 status_clrs <- c(
-  statute = "#1b2a4a",
-  EO      = "#e8a830",
-  expired = "#b0b0b0",
-  none    = "#c8c2b8"
+  statute          = "#d4652a",   # warm orange  — WC, most forward
+  EO               = "#c8a030",   # warm gold    — exec order
+  pension          = NON_WC_CLR,  # medium blue  — non-WC, middle
+  employer_benefit = NON_WC_CLR,
+  lodd_only        = NON_WC_CLR,
+  expired          = "#4a5e6e",   # cool dark gray-blue — receding
+  none             = "#2d3d4e"    # near-background dark — most receding
 )
 
 # "all" must be first so it becomes the default selection
@@ -403,6 +420,15 @@ legend_occupation_html <- make_legend(
     "4 conditions","5 conditions","6 conditions")
 )
 
+legend_status_html <- make_legend(
+  c("#d4652a", NON_WC_CLR, "#c8a030", "#4a5e6e", "#2d3d4e"),
+  c("WC presumption (burden-shifting)",
+    "Other benefit (pension / employer / LODD — not WC)",
+    "Executive order",
+    "Expired / lapsed",
+    "No coverage")
+)
+
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 ui <- fluidPage(
@@ -605,7 +631,10 @@ ui <- fluidPage(
           HTML(tile_grid_html)
         ),
         div(style = "flex:1; min-width:0;",
-          leafletOutput("map", height = "500px")
+          leafletOutput("map", height = "500px"),
+          div(style = "margin-top:8px; padding-left:4px;",
+            uiOutput("map_legend")
+          )
         )
       )
     ),
@@ -813,38 +842,49 @@ server <- function(input, output, session) {
   })
 
   # ── Map fill logic ───────────────────────────────────────────────────────────
-  # Fill changes only on UpSet interactions — not on map hover (which uses the
-  # instant JS-side highlightOptions border instead, avoiding Shiny roundtrip lag).
+  # base_fills: data-driven color when a specific condition is selected.
+  # map_fills: overlays UpSet hover/selection colors on top of base_fills.
 
-  map_fills <- reactive({
-    hs  <- hover_states()
-    sg  <- selected_group()
-    si  <- selected_int_states()
-
-    if (!is.null(hs)) {
+  base_fills <- reactive({
+    if (input$mode == "condition" && input$condition != "all") {
+      df <- map_data_cond()
       vapply(poly_base_names, function(abb) {
-        if (abb %in% hs) "#e8a830" else "#3d5a73"
-      }, character(1), USE.NAMES = FALSE)
-    } else if (!is.null(sg) || !is.null(si)) {
-      sel <- c(sg, si)
-      vapply(poly_base_names, function(abb) {
-        if (abb %in% sel) "#d63b2f" else "#3d5a73"
+        row <- df[df$state == abb, ]
+        if (nrow(row) == 0) return(unname(status_clrs["none"]))
+        clr <- status_clrs[row$presumption_type[[1]]]
+        if (is.na(clr)) unname(status_clrs["none"]) else unname(clr)
       }, character(1), USE.NAMES = FALSE)
     } else {
       rep("#3d5a73", length(poly_base_names))
     }
   })
 
+  # Fills are always semantic — UpSet interaction uses opacity + border, not fill.
+  map_fills <- reactive({ base_fills() })
+
+  map_opacities <- reactive({
+    sel <- unique(c(hover_states(), selected_group(), selected_int_states()))
+    if (length(sel) == 0) {
+      rep(0.92, length(poly_base_names))
+    } else {
+      vapply(poly_base_names, function(abb) {
+        if (abb %in% sel) 0.92 else 0.28
+      }, numeric(1), USE.NAMES = FALSE)
+    }
+  })
+
+
   # ── Map ──────────────────────────────────────────────────────────────────────
 
-  draw_polygons <- function(proxy_or_leaf, fills, popups) {
+  draw_polygons <- function(proxy_or_leaf, fills, opacities, popups) {
     proxy_or_leaf |>
       addPolygons(
         data         = states_sf,
         fillColor    = fills,
-        fillOpacity  = 0.95,
+        fillOpacity  = opacities,
         color        = "#1a2a40",
         weight       = 1.2,
+        opacity      = 1,
         layerId      = states_sf$state,
         popup        = popups,
         label        = lapply(popups, HTML),
@@ -853,7 +893,7 @@ server <- function(input, output, session) {
           direction = "auto"
         ),
         highlightOptions = highlightOptions(
-          weight = 2.5, color = "#e8a830", bringToFront = TRUE
+          weight = 2.5, color = "#e8a830", opacity = 1, bringToFront = TRUE
         )
       )
   }
@@ -868,17 +908,18 @@ server <- function(input, output, session) {
       boxZoom            = FALSE
     )) |>
       setView(lng = -97, lat = 37, zoom = 4) |>
-      draw_polygons(map_fills(), poly_popups())
+      draw_polygons(map_fills(), map_opacities(), poly_popups())
   })
 
-  # Update polygon fills and tile colors whenever map_fills() changes.
-  # addPolygons with matching layerIds updates fills in place (no flash).
+  # Redraws polygons whenever fills or opacities change.
+  # addPolygons with matching layerIds updates in place (no flash).
   observe({
     fills  <- map_fills()
+    opacs  <- map_opacities()
     popups <- poly_popups()
     session$sendCustomMessage("update_tiles", setNames(as.list(fills), poly_base_names))
     leafletProxy("map") |>
-      draw_polygons(fills, popups)
+      draw_polygons(fills, opacs, popups)
   })
 
   # Map click → state details tab
@@ -1221,6 +1262,14 @@ server <- function(input, output, session) {
   })
 
   output$legend <- renderUI({ legend_occupation_html })
+
+  output$map_legend <- renderUI({
+    if (input$mode == "condition" && input$condition != "all") {
+      legend_status_html
+    } else {
+      legend_occupation_html
+    }
+  })
 
   # ── Stat cards ────────────────────────────────────────────────────────────────
 
