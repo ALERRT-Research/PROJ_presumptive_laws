@@ -8,9 +8,10 @@ deadline: null
 target: null
 effort_remaining: ~10h
 weekly_commitment: 2h
-last_updated: 2026-06-02
+last_updated: 2026-06-09
 blockers: null
 blocking_others: null
+funding_prospect: Blue Cancer Connect (BCC) — meeting with CEO Vickie Speed scheduled Thu or Fri June 12-13; may include JC Barnes; exploratory re: what BCC would fund in the presumptive laws space
 phase: in-progress
 repo: https://github.com/ALERRT-Research/PROJ_presumptive_laws
 sync: github
@@ -25,6 +26,7 @@ sync: github
 
 ## This Week
 
+- Meeting with Vickie Speed (Blue Cancer Connect CEO), possibly JC Barnes — Thu or Fri June 12-13. Exploratory: what is BCC interested in funding in the presumptive laws space? Come prepared with a one-paragraph description of the project and a sense of what external funding could unlock (data updates, expanded coverage, dissemination).
 - Add responder-type filter (firefighter, EMS, police, volunteer)
 - Populate year-of-adoption data
 - Benchmark UI against IAFF presumptive health page (https://www.iaff.org/presumptive-health/)
