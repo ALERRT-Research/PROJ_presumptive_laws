@@ -52,6 +52,10 @@ Data source: `website/data/presumptive_laws.json` — single source of truth for
 
 Data current through late 2022 (NCCI brief + Brandt-Rauf 2024). Laws have likely changed; update process TBD.
 
+**Open issue (2026-07-02):** `docs/lit/state_histories/` (all `XX_timeline.md` files + `registry.md`, all 50 states) does not exist anywhere on this machine/checkout. It's gitignored, so if it was ever populated (session logs confirm it was, as of 2026-06-02) it either lives only on another machine or was deleted. Every dated item under "Pending Notes" below currently references an `XX_timeline.md` file that can't be found here. Needs recovery/investigation as a separate task before those pending checks can actually be actioned.
+
+**Open issue (2026-07-02):** `data/processed/presumptive_laws_v2.csv` has diverged from the live `website/shiny-app/data/presumptive_laws.json` (~32 rows out of sync). Corrections have been hand-patched directly into the JSON via one-off Python scripts (`apply_p1/p2/p3_corrections.py`), bypassing the CSV/RDS pipeline (`4_iaff_combine.r` / `5_iaff_export_json.r`) entirely. The CSV is effectively orphaned. Worth deciding whether to retire the CSV pipeline or restore it as the source of truth.
+
 ## Pending Notes
 
 - 2026-07-07 | Verify Ohio PTSD fund transfer: ORC § 126.65 mandated $40M transfer to fund on July 1, 2026. Confirm transfer occurred, check whether claim procedures were promulgated by OBM/OP&F, and verify volunteer FF coverage question. Update OH_timeline.md Key Gaps 3 and 5 accordingly.
