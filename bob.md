@@ -8,7 +8,7 @@ deadline: null
 target: null
 effort_remaining: ~10h
 weekly_commitment: 2h
-last_updated: 2026-06-09
+last_updated: 2026-07-02
 blockers: null
 blocking_others: null
 funding_prospect: Blue Cancer Connect (BCC) — meeting with CEO Vickie Speed scheduled Thu or Fri June 12-13; may include JC Barnes; exploratory re: what BCC would fund in the presumptive laws space
@@ -26,10 +26,10 @@ sync: github
 
 ## This Week
 
-- Meeting with Vickie Speed (Blue Cancer Connect CEO), possibly JC Barnes — Thu or Fri June 12-13. Exploratory: what is BCC interested in funding in the presumptive laws space? Come prepared with a one-paragraph description of the project and a sense of what external funding could unlock (data updates, expanded coverage, dissemination).
-- Add responder-type filter (firefighter, EMS, police, volunteer)
-- Populate year-of-adoption data
-- Benchmark UI against IAFF presumptive health page (https://www.iaff.org/presumptive-health/)
+- Reran `/research-states` on the 6 pre-pipeline states (TX, CA, NY, FL, IL, PA) that predated the legislative-reviewer QC gate — all 6 scored 97/100. Fresh `XX_timeline.md` files and a recreated `registry.md` now exist at `docs/lit/state_histories/` for these six.
+- Applied P4 corrections (`analysis/code/apply_p4_corrections.py`) to the live dashboard JSON: fixed CA § 31720.91 PTSD sunset (2029, not 2032), added TX's 2025 retiree critical-illness benefit, clarified IL's cross-track cancer standard, added PA's missing Occupational Disease Act § 1208(o) heart/lung presumption, added FL's missing smallpox provision (flagged its Ch. 2026-99 cancer amendment as unverified), and modeled all 5 of NY's parallel presumption tracks (previously only 1 was modeled) using a new NYC-specific labeling convention reused from IL's existing Article 4/6 pattern. Dashboard JSON grew from 445 to 461 rows.
+- Committed (`fc40dfa`) and pushed to main.
+- Next up: extend the QC-gated rerun to the remaining 44 states (`docs/lit/state_histories/` still empty for them — see open issue below); decide fate of the orphaned CSV pipeline; still outstanding — responder-type filter, year-of-adoption data, IAFF UI benchmark.
 
 ## Upcoming Milestones
 
@@ -52,9 +52,11 @@ Data source: `website/data/presumptive_laws.json` — single source of truth for
 
 Data current through late 2022 (NCCI brief + Brandt-Rauf 2024). Laws have likely changed; update process TBD.
 
-**Open issue (2026-07-02):** `docs/lit/state_histories/` (all `XX_timeline.md` files + `registry.md`, all 50 states) does not exist anywhere on this machine/checkout. It's gitignored, so if it was ever populated (session logs confirm it was, as of 2026-06-02) it either lives only on another machine or was deleted. Every dated item under "Pending Notes" below currently references an `XX_timeline.md` file that can't be found here. Needs recovery/investigation as a separate task before those pending checks can actually be actioned.
+**Open issue (updated 2026-07-02):** `docs/lit/state_histories/` (all `XX_timeline.md` files + `registry.md`, all 50 states) was missing entirely from this machine/checkout as of the start of today's session. It's gitignored, so if it was ever populated (session logs confirm it was, as of 2026-06-02) it either lived only on another machine or was deleted. Today's session reran the QC-gated pipeline for the 6 states that predated the legislative-reviewer gate (TX, CA, NY, FL, IL, PA — all 97/100) and recreated their `XX_timeline.md` files plus `registry.md` at `docs/lit/state_histories/`. The other 44 states' timeline files/registry entries are still missing and unrecovered. Every dated item under "Pending Notes" below that references a state outside this set of 6 still can't be actioned until its `XX_timeline.md` is recovered or regenerated.
 
-**Open issue (2026-07-02):** `data/processed/presumptive_laws_v2.csv` has diverged from the live `website/shiny-app/data/presumptive_laws.json` (~32 rows out of sync). Corrections have been hand-patched directly into the JSON via one-off Python scripts (`apply_p1/p2/p3_corrections.py`), bypassing the CSV/RDS pipeline (`4_iaff_combine.r` / `5_iaff_export_json.r`) entirely. The CSV is effectively orphaned. Worth deciding whether to retire the CSV pipeline or restore it as the source of truth.
+**Open issue (updated 2026-07-02):** `data/processed/presumptive_laws_v2.csv` has diverged from the live `website/shiny-app/data/presumptive_laws.json` (~32 rows out of sync). Corrections have been hand-patched directly into the JSON via one-off Python scripts (`apply_p1/p2/p3_corrections.py`, and now `apply_p4_corrections.py`), bypassing the CSV/RDS pipeline (`4_iaff_combine.r` / `5_iaff_export_json.r`) entirely. The CSV is effectively orphaned and now further out of sync given the P4 additions (JSON is at 461 rows). Worth deciding whether to retire the CSV pipeline or restore it as the source of truth.
+
+**Open issue (added 2026-07-02):** The P4 patch missed a completeness gap — Peter caught it by eyeballing the live map: TX's pre-pipeline data (2026-05-23) had zero `law_enforcement` rows for cardiovascular, respiratory, or infectious/TB, despite the fresh research confirming peace officers ARE covered under those Gov't Code sections. P4 only checked for content the research explicitly flagged as *wrong*; it didn't audit for rows that were simply *missing* with nothing flagging the omission. Fixed for TX via `apply_p5_corrections.py` (461 → 465 rows). **Not yet checked for the other 5 states (CA, NY, FL, IL, PA)** — same failure mode could be present there too. Next state-data session should cross-check every condition/responder-type combination the research confirms exists against what's actually in the live JSON, not just re-verify what was already flagged as a discrepancy.
 
 ## Pending Notes
 
