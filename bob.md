@@ -6,12 +6,12 @@ priority: medium
 path: /Users/PTT2/Documents/GitHub/PROJ_presumptive_laws
 deadline: null
 target: null
-effort_remaining: ~10h
+effort_remaining: ~10h (existing feature-expansion backlog below); public-facing redesign (see 2026-07-17 note) not yet scoped — next step is a planning/scoping session, not effort estimation
 weekly_commitment: 2h
-last_updated: 2026-07-02
+last_updated: 2026-07-17
 blockers: null
 blocking_others: null
-funding_prospect: Blue Cancer Connect (BCC) — meeting with CEO Vickie Speed scheduled Thu or Fri June 12-13; may include JC Barnes; exploratory re: what BCC would fund in the presumptive laws space
+funding_prospect: Blue Cancer Connect (BCC) — meeting with CEO Vickie Speed scheduled Thu or Fri June 12-13; may include JC Barnes; exploratory re: what BCC would fund in the presumptive laws space. 2026-07-17: Peter wants to follow up with Vickie Speed (spelling confirmed 2026-07-17) at Blue Cancer Connect to keep her interested in ALERRT's research-infrastructure capabilities.
 phase: in-progress
 repo: https://github.com/ALERRT-Research/PROJ_presumptive_laws
 sync: github
@@ -57,6 +57,20 @@ Data current through late 2022 (NCCI brief + Brandt-Rauf 2024). Laws have likely
 **Open issue (updated 2026-07-02):** `data/processed/presumptive_laws_v2.csv` has diverged from the live `website/shiny-app/data/presumptive_laws.json` (~32 rows out of sync). Corrections have been hand-patched directly into the JSON via one-off Python scripts (`apply_p1/p2/p3_corrections.py`, and now `apply_p4_corrections.py`), bypassing the CSV/RDS pipeline (`4_iaff_combine.r` / `5_iaff_export_json.r`) entirely. The CSV is effectively orphaned and now further out of sync given the P4 additions (JSON is at 461 rows). Worth deciding whether to retire the CSV pipeline or restore it as the source of truth.
 
 **Open issue (added 2026-07-02):** The P4 patch missed a completeness gap — Peter caught it by eyeballing the live map: TX's pre-pipeline data (2026-05-23) had zero `law_enforcement` rows for cardiovascular, respiratory, or infectious/TB, despite the fresh research confirming peace officers ARE covered under those Gov't Code sections. P4 only checked for content the research explicitly flagged as *wrong*; it didn't audit for rows that were simply *missing* with nothing flagging the omission. Fixed for TX via `apply_p5_corrections.py` (461 → 465 rows). **Not yet checked for the other 5 states (CA, NY, FL, IL, PA)** — same failure mode could be present there too. Next state-data session should cross-check every condition/responder-type combination the research confirms exists against what's actually in the live JSON, not just re-verify what was already flagged as a discrepancy.
+
+## New Direction — Public-Facing Redesign (flagged 2026-07-17, PLANNING STAGE — not yet started)
+
+Peter wants to substantially redesign the public-facing side of this project. Still conceptual, no hard deadline. **Next step is a planning/scoping session, not execution.**
+
+- Front-end dashboard that passes through to a series of static pages, one per state (at least 50 pages).
+- All state pages follow one common template (template itself needs to be designed) containing:
+  - Text-based description of that state's presumptive laws
+  - Links to the actual legislative source pages
+  - An infographic showing which groups are covered for which conditions, and the timeline of laws including upcoming/pending legislation
+- Needs a regular update schedule (recurring maintenance), not a one-time build.
+- **Motivation:** Peter wants to follow up with contact Vickie Speed at Blue Cancer Connect to keep her interested in ALERRT's research-infrastructure capabilities. No hard deadline, but the goal is "something positive to show."
+
+**Cross-reference — police-vs-firefighter mortality comparison idea:** Peter explicitly flagged this redesign as dovetailing with a backlog idea comparing leading causes of death for firefighters vs. police officers in NOMS data (rationale: demonstrates the need to extend presumptive-law protections to law enforcement, mirroring firefighter presumptive laws). That idea already existed in the backlog as "LEO vs. Firefighter Mortality and the Presumptive Law Coverage Gap" (`~/.claude/bob/future-projects.md`, added 2026-07-03) — not duplicated here. If/when that idea is developed into a project, its findings would help make the case for why this dashboard's infrastructure should expand to cover law enforcement, not just firefighters.
 
 ## Pending Notes
 
