@@ -146,8 +146,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="data-sources" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
 <div class="source-card">
-<p><span class="source-name">Primary source</span> <strong>IAFF Presumptive Health database</strong> — <a href="https://www.iaff.org/presumptive-health/">iaff.org/presumptive-health</a></p>
-<p>Maintained by the International Association of Fire Fighters, this database covers presumptive workers’ compensation laws for first responders in all 50 states. Each state page includes statute citations, covered conditions, covered occupations, and links to the underlying law. This dashboard is essentially a structured, map-based interface for the information the IAFF has compiled. We have not independently verified the legal text of each statute.</p>
+<p><span class="source-name">Primary source</span> <strong>Original legislative research</strong> — direct review of primary statutory text, all 50 states</p>
+<p>Every entry in this dashboard is based on a dedicated research pass against the actual law: official state code websites, state legislature bill-tracking pages, and reputable full-text legal mirrors (public.law, Justia, FindLaw). Each state’s statute citations, covered conditions, covered occupations, service requirements, and effective dates were traced from the primary text itself, not copied from a secondary summary. Every state write-up then went through an independent second review before being added to the dashboard.</p>
+</div>
+<div class="source-card">
+<p><span class="source-name">Starting-point reference</span> <strong>IAFF Presumptive Health database</strong> — <a href="https://www.iaff.org/presumptive-health/">iaff.org/presumptive-health</a></p>
+<p>Maintained by the International Association of Fire Fighters, this database was used as an initial lead on where to look in each state — a directory to check, not a source to trust outright. Comparing it against the primary statutory text repeatedly turned up problems: wrong statute citations, outdated effective dates, missing conditions, and mischaracterized benefit types. Where IAFF’s page and the actual law disagreed, this dashboard follows the law.</p>
 </div>
 <div class="source-card">
 <p><span class="source-name">Cross-check reference</span> Neugent, K., &amp; Spidell, B. (2023). <em>Firefighters and first responders: 2023 update on presumptive workers comp benefits.</em> National Council on Compensation Insurance (NCCI).</p>
@@ -160,10 +164,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>For each state, IAFF source pages were reviewed and law attributes — condition covered, occupations covered, statute citation, service requirements, post-employment coverage, and restrictions — were coded into a structured dataset. Each row represents one state × condition category × occupation combination.</p>
-<p>Where the IAFF source characterized a provision as historical or inactive, that status is reflected in the data. A small number of entries are flagged with <strong>*</strong> in the Notes column where the active status of a statute is uncertain.</p>
+<p>For each state, a dedicated research pass identified the governing statute(s) directly from primary sources — official state code sites, state legislature bill pages, and full-text legal mirrors — and traced amendment history and effective dates from that text. IAFF’s page for the state was checked only as a starting hypothesis about where to look; it was not treated as the final word. Law attributes — condition covered, occupations covered, statute citation, service requirements, post-employment coverage, and restrictions — were then coded into a structured dataset from the verified primary text. Each row represents one state × condition category × occupation combination.</p>
+<p>Each completed state write-up went through an independent second review focused on accuracy and completeness before being added to the dashboard. This process found IAFF’s page to be wrong, stale, or incomplete for a substantial number of states — citing the wrong statute, using outdated effective dates, omitting conditions or restrictions, or mischaracterizing what type of benefit a law provides — and this dashboard’s entries reflect the corrected, source-verified version rather than IAFF’s characterization.</p>
+<p>Where the primary statutory text itself is ambiguous about whether a provision is historical or currently active, that uncertainty is reflected in the data. A small number of entries are flagged with <strong>*</strong> in the Notes column where the active status of a statute is genuinely unclear from the law itself.</p>
 <div class="disclaimer-box">
-<p><strong>Data currency:</strong> The IAFF database is actively maintained, but this dashboard reflects a point-in-time extraction. Laws change. Always verify current status with a qualified attorney or your state’s workers’ compensation board before relying on this resource for legal or financial decisions.</p>
+<p><strong>Data currency:</strong> This dashboard reflects a point-in-time research pass, completed August 2026. Laws change. Always verify current status with a qualified attorney or your state’s workers’ compensation board before relying on this resource for legal or financial decisions.</p>
 </div>
 </section>
 <section id="about-alerrt" class="level2">
