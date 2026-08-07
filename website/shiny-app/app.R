@@ -1297,6 +1297,7 @@ server <- function(input, output, session) {
         ),
         tobacco_str  = if_else(isTRUE(tobacco_exclusion), "Yes", ""),
         citation_str = if_else(!is.na(statute_citation), statute_citation, ""),
+        source_url   = source_url,
         needs_verif  = isTRUE(needs_verification),
         notes_str    = case_when(
           needs_verif & !is.na(notes) & nchar(trimws(notes)) > 0 ~
@@ -1307,7 +1308,7 @@ server <- function(input, output, session) {
         )
       ) |>
       group_by(state_name, cond_label, Status, svc_str, pt_str,
-               tobacco_str, citation_str, notes_str, needs_verif) |>
+               tobacco_str, citation_str, source_url, notes_str, needs_verif) |>
       summarise(Occupations = paste(sort(unique(resp_label)), collapse = ", "),
                 .groups = "drop") |>
       arrange(state_name, cond_label) |>
@@ -1364,15 +1365,16 @@ server <- function(input, output, session) {
       return(datatable(data.frame(Note = "No active coverage found."),
                        rownames = FALSE, options = list(dom = "t")))
 
-    # Embed the IAFF link directly into the citation text
+    # Link each citation directly to its own statute/legislative source (not IAFF —
+    # IAFF is just a directory and this project's research repeatedly found its
+    # pages wrong, stale, or incomplete). Rows without a confidently-matched direct
+    # source (see analysis/code/apply_p7_source_urls.py) show plain citation text
+    # with no link, rather than silently falling back to IAFF.
     tbl <- tbl |>
       mutate(
         citation_str = case_when(
-          !is.na(iaff_url) & nchar(citation_str) > 0 ~
-            paste0('<a href="', iaff_url, '" target="_blank">', citation_str, '</a>'),
-          !is.na(iaff_url) ~
-            paste0('<a href="', iaff_url,
-                   '" target="_blank" style="white-space:nowrap;">IAFF source ↗</a>'),
+          !is.na(source_url) & nchar(citation_str) > 0 ~
+            paste0('<a href="', source_url, '" target="_blank">', citation_str, '</a>'),
           TRUE ~ citation_str
         )
       )
