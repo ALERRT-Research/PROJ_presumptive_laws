@@ -599,11 +599,11 @@ ui <- fluidPage(
         ),
         hr(style = "margin:8px 0;"),
         tags$p(
-          "Data: ",
-          tags$a("IAFF Presumptive Health Initiative",
-                 href   = "https://www.iaff.org/presumptive-health/",
+          "Data: original legislative research by the ",
+          tags$a("ALERRT Center",
+                 href   = "https://alerrt.org/",
                  target = "_blank"),
-          ". Verify with a qualified attorney or your state's WC board.",
+          ", verified against primary statutory sources. See About for methodology. Verify with a qualified attorney or your state's WC board.",
           style = "font-size:0.78em; color:#777; margin:0;"
         )
       )

@@ -71,6 +71,6 @@ Keeping track of where these protections exist — and what they actually cover 
 
 The Coverage Map was developed by the [ALERRT Center](https://alerrt.org) at Texas State University. ALERRT conducts applied research on first responder training, health, and wellness.
 
-The underlying data come from the [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/), maintained by the International Association of Fire Fighters. We've structured and mapped that information to make it easier to search and compare — but the IAFF pages remain the authoritative source. See the [About](about.qmd) page for full methodology and citation.
+This dashboard is built from original research conducted directly against each state's statutory text — not a repackaging of any single outside source. The [IAFF Presumptive Health database](https://www.iaff.org/presumptive-health/) was used as a starting point for where to look, but every entry here was traced back to, and verified against, the actual law. See the [About](about.qmd) page for full methodology and citation.
 
 <span class="proto-badge">Prototype</span> This is an early-stage research tool. If you notice an error or a law that has changed, the [About](about.qmd) page explains how to interpret the data.
