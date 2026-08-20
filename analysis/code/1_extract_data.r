@@ -2,7 +2,8 @@
 # Script:  1_extract_data.r
 # Purpose: SUPERSEDED — original hand-coded extraction from two published
 #          academic reviews (Brandt-Rauf 2024; NCCI 2023). Kept for reference.
-#          Active data pipeline: scripts 2_iaff_scrape.r through 5_iaff_export_json.r
+#          Active data pipeline (as of 2026-08-20): 4_combine_records.r then
+#          5_export_json.r, reading data/raw/state_records/. See data/codebook.md.
 #          Primary data source: IAFF Presumptive Health database (iaff.org/presumptive-health)
 #
 # Original sources used in this script:

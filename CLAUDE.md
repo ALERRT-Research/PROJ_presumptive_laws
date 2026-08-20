@@ -9,19 +9,23 @@ Interactive web dashboard mapping presumptive workers' compensation laws for fir
 Quarto website with embedded Shinylive app (Shiny in WebAssembly — fully static, no server required).
 
 ## Data Sources
-Primary: **IAFF Presumptive Health database** ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)) — all 50 states, actively maintained, scraped via `analysis/code/2_iaff_scrape.r`.
+Primary: **independent per-state legislative research**, recorded in `docs/lit/state_histories/*_timeline.md` with per-state status and QC scores in `docs/lit/state_histories/registry.md`. All 50 states were QC-gated 97–100/100 on 2026-08-07.
+
+**IAFF is not a source.** The IAFF Presumptive Health directory ([iaff.org/presumptive-health](https://www.iaff.org/presumptive-health/)) seeded the original dataset and was repeatedly found wrong, stale, or incomplete — omitted statutes, wrong effective dates, mischaracterized provisions. P8 (2026-08-07) removed it as the dashboard's benchmark. Treat it as a directory of leads to verify, never as an authority. The `iaff_url` column is a per-state back-link only.
 
 Cross-check references (PDFs in `docs/lit/`, not tracked in git):
 - NCCI (2023) brief — ~38 NCCI-jurisdiction states, through Nov 2022
 - Brandt-Rauf et al. (2024), *JPHP* — 50-state inventory, through Dec 2022
 
-The active dataset is `data/processed/presumptive_laws_v2.rds` and `website/shiny-app/data/presumptive_laws.json`. The JSON is what the Shinylive app reads at runtime. Keep these in sync via the pipeline in `analysis/code/5_iaff_export_json.r`.
+**Source of truth is `data/raw/state_records/{AL..WY,DC}.json`** — 51 committed files, one per jurisdiction. Everything downstream is a build artifact: `data/processed/presumptive_laws_v2.rds`/`.csv`, and the two dashboard copies at `website/data/` and `website/shiny-app/data/presumptive_laws.json`. Edit the record files, never the JSON. Full field documentation in `data/codebook.md`.
 
 ## Unit of Observation
 One row = one state × condition category × responder type (e.g., Texas × Cancer × Firefighter).
 
 ## Known Data Issues
-- A small number of entries are flagged `needs_verification: true` where active status is uncertain (currently NY cancer and respiratory — see `data/raw/iaff_extracted/ny.json`)
+- 17 rows carry a `needs_verification` note describing what is unresolved (NY 6, OH 4, AR 3, then HI/IA/KY/PA one each). The field takes explanatory text or null — never a bare boolean, since a flag with no explanation is not reviewable.
+- `data_retrieved` is stale: 411 of 479 rows still read `2026-05-23` though the research behind them was re-verified 2026-08-07. Fix from the `Last Verified` column in `docs/lit/state_histories/registry.md`.
+- DC is in the data but was outside the 2026-08-07 QC pass, which covered the 50 states. Its 8 rows carry lower confidence.
 - Some states have partial or temporary coverage (executive orders, COVID-19 sunset provisions)
 - DC is present in the data but absent from the map (not in `maps::map("state")`)
 
@@ -59,16 +63,19 @@ Not applicable.
 
 This is a research product, not a research paper. The standard paper pipeline (Writer, Peer Review, Submission) does not apply here.
 
-**Data update pipeline** (run in order after editing any state JSON in `data/raw/iaff_extracted/`):
+**Data update pipeline** (run in order after editing any record file in `data/raw/state_records/`):
 ```
-Rscript analysis/code/4_iaff_combine.r
-Rscript analysis/code/5_iaff_export_json.r
-cp website/data/presumptive_laws.json website/shiny-app/data/presumptive_laws.json
+Rscript analysis/code/4_combine_records.r    # validate + bind -> v2.rds/.csv
+Rscript analysis/code/5_export_json.r        # write BOTH dashboard JSON copies
 cd website && Rscript -e "shinylive::export('shiny-app', 'app', overwrite=TRUE)"
 cd website && quarto render
 bash deploy.sh   # to push live to GitHub Pages
 ```
 
-**Critical constraint:** The Shinylive app reads only from `website/shiny-app/data/presumptive_laws.json`. That file must be kept in sync with `data/processed/presumptive_laws_v2.rds` via the pipeline above.
+No `cp` step any more — `5_export_json.r` writes both dashboard copies from one data frame and hash-verifies they match. The old manual copy is how they could silently diverge.
+
+**`4_combine_records.r` aborts rather than coercing.** An out-of-domain `condition_category`, `responder_type`, or `presumption_type` stops the build with the offending rows printed. Do not "fix" this by widening the domain without also updating `website/shiny-app/app.R` (lines 29–92) and `data/codebook.md` — `app.R` builds its colour/label/priority lookups by name and silently renders a blank tile for a value it does not know.
+
+**Retired, do not run:** `2_iaff_scrape.r`, `3_iaff_extract.r`, `4_iaff_combine.r`, `5_iaff_export_json.r`, and `apply_p1`–`apply_p8`. Each carries a header explaining why. `4_iaff_combine.r` in particular is destructive: its stale `valid_ptype` would silently blank the 58 `pension`/`employer_benefit`/`lodd_only` rows.
 
 **Design principle:** Audience includes non-researchers. Plain language, minimal jargon. Every filter and label on the map should be self-explanatory without a methodology section.

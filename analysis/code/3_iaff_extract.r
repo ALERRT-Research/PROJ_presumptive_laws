@@ -1,3 +1,15 @@
+# =============================================================================
+# OUT OF THE DATA PATH as of 2026-08-20.
+#
+# Extracted per-state records from scraped IAFF HTML into
+# data/raw/iaff_extracted/, which was the old pipeline's input. Nothing reads
+# that directory any more; the pipeline now reads data/raw/state_records/.
+# See data/codebook.md.
+#
+# Kept on disk as provenance, and as a starting point if the IAFF
+# change-detection idea described in 2_iaff_scrape.r's header gets built.
+# =============================================================================
+
 # Project: PROJ_presumptive_laws
 # Script:  3_iaff_extract.r
 # Created: 2026-05-23

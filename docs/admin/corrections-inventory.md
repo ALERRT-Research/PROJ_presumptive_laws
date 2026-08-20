@@ -375,3 +375,14 @@ Rscript analysis/code/4_iaff_combine.r
 Rscript analysis/code/5_iaff_export_json.r
 cp website/data/presumptive_laws.json website/shiny-app/data/presumptive_laws.json
 ```
+
+> **Superseded 2026-08-20.** This document is a historical work plan; the commands above and
+> the schema note below describe the pipeline as it stood when the inventory was written, and
+> are left unedited as a record of that. Both are now wrong:
+>
+> - The pipeline is `4_combine_records.r` then `5_export_json.r`, reading
+>   `data/raw/state_records/`. There is no `cp` step. Running `4_iaff_combine.r` today would
+>   blank 58 rows. See `data/codebook.md`.
+> - The "schema constraints" paragraph below is resolved: `presumption_type` now carries
+>   `pension` (28 rows), `employer_benefit` (26), and `lodd_only` (4) as first-class values,
+>   so legally-distinct non-WC benefits no longer have to be flagged in `notes` alone.

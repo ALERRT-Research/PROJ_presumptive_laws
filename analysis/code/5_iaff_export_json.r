@@ -1,3 +1,15 @@
+# =============================================================================
+# RETIRED 2026-08-20 -- superseded by 5_export_json.r. DO NOT RUN.
+#
+# This script wrote only website/data/presumptive_laws.json. The copy the app
+# actually reads at runtime, website/shiny-app/data/presumptive_laws.json, was
+# kept current by hand (see docs/logs/2026-05-27_session3.md) -- a silent
+# divergence risk. The replacement writes both from one data frame and
+# hash-verifies them.
+#
+# Kept on disk as provenance. See data/codebook.md for the current pipeline.
+# =============================================================================
+
 # Project: PROJ_presumptive_laws
 # Script:  5_iaff_export_json.r
 # Created: 2026-05-23

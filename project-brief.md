@@ -17,7 +17,7 @@ Two published academic reviews were used to cross-check the IAFF extraction:
 1. NCCI (2023) brief — ~38 NCCI-jurisdiction states, WC presumptions through Nov 2022
 2. Brandt-Rauf et al. (2024), *Journal of Public Health Policy* — 50-state inventory of WC presumption laws, current through Dec 2022
 
-Future updates: re-run the IAFF scrape pipeline (`analysis/code/2_iaff_scrape.r` through `5_iaff_export_json.r`) and redeploy.
+Future updates: edit the affected per-state record files in `data/raw/state_records/`, then run `analysis/code/4_combine_records.r` followed by `5_export_json.r` and redeploy. The IAFF scrape (`2_iaff_scrape.r`, `3_iaff_extract.r`) is no longer in the data path — see `data/codebook.md`.
 
 ## Target Venue
 Standalone website linked from the ALERRT research site. Audience: policymakers and first responder families — accessible and intuitive presentation required.

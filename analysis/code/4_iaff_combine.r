@@ -1,3 +1,20 @@
+# =============================================================================
+# RETIRED 2026-08-20 -- superseded by 4_combine_records.r. DO NOT RUN.
+#
+# This script's input was the IAFF scrape, which P8 (2026-08-07) formally demoted
+# from ground truth. Running it would rebuild the dataset from repudiated stale
+# HTML and discard the eight correction passes baked into the current data.
+#
+# It is also actively destructive. Its valid_ptype list (below) has gone stale
+# relative to website/shiny-app/app.R, and line ~55 silently maps anything not in
+# that list to "none". The live data contains pension (28 rows),
+# employer_benefit (26) and lodd_only (4) -- 58 rows would be blanked with no
+# warning.
+#
+# Kept on disk as provenance for how the 2026-05 dataset was built.
+# See data/codebook.md for the current pipeline.
+# =============================================================================
+
 # Project: PROJ_presumptive_laws
 # Script:  4_iaff_combine.r
 # Created: 2026-05-23

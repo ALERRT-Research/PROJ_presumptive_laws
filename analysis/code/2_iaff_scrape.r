@@ -1,3 +1,18 @@
+# =============================================================================
+# OUT OF THE DATA PATH as of 2026-08-20.
+#
+# IAFF is no longer a source for this dataset (P8, 2026-08-07) -- it is a
+# directory of leads that was checked and repeatedly found wrong, stale, or
+# incomplete. The pipeline now reads data/raw/state_records/, maintained by
+# per-state legislative research. See data/codebook.md.
+#
+# This script still works and is retained for a different, still-useful purpose:
+# change detection. Re-scraping and diffing against a previous scrape would flag
+# which state pages have moved, as a trigger for the per-state review cadence in
+# docs/lit/state_histories/registry.md. THAT DIFF IS NOT IMPLEMENTED YET -- as
+# written, this only fetches and stores HTML.
+# =============================================================================
+
 # Project: PROJ_presumptive_laws
 # Script:  2_iaff_scrape.r
 # Created: 2026-05-23
