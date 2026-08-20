@@ -11,8 +11,19 @@ website/dashboard/
 .RData
 .Renviron
 
-# Copyrighted PDFs — not for public distribution
-docs/lit/
+# Copyrighted PDFs and research prose — not for public distribution.
+# Uses /** rather than / so git still descends and the negations below can apply;
+# with a plain `docs/lit/` git never enters the directory and nothing inside can be
+# re-included.
+docs/lit/**
+
+# Exception: the state research template is project infrastructure, not literature.
+# It defines the record schema that legislative-researcher must emit (see
+# data/codebook.md), so a machine without it cannot run a state review correctly.
+# Timeline files and registry.md stay ignored — publishing those is a separate call.
+!docs/lit/state_histories/
+!docs/lit/state_histories/templates/
+!docs/lit/state_histories/templates/**
 
 # Claude Code — local settings only (machine-specific paths, permissions)
 .claude/settings.local.json
