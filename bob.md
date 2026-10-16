@@ -49,7 +49,7 @@ MVP map is working. Next steps are feature expansion (responder-type filter, yea
 
 Data source: `website/data/presumptive_laws.json` — single source of truth for the Shinylive app, and currently the *only* authoritative copy (see the pipeline note below). The `website/shiny-app/data/` copy must match it byte-for-byte. Note the older instruction to "keep in sync with `data/processed/presumptive_laws.rds`" was pointing at the v1 file written by `1_extract_data.r`; the v2 pipeline's artifact is `presumptive_laws_v2.rds`, and both are stale as of 2026-05-27.
 
-Data current through 2026-08-07 for all 50 states. Next scheduled review dates are tracked per-state in `registry.md` (5 biennial states: TX/NV/MT/ND/OR reviewed ~Sept of session years; all others reviewed each January).
+Data current through 2026-08-07 for all 50 states. All states are re-reviewed on the quarterly cadence (first week of Jan/Apr/Jul/Oct; next 2027-01-04); `registry.md` Next Review column updated to match 2026-10-16.
 
 **Open:**
 
@@ -84,7 +84,7 @@ Legislative watches, re-checked 2026-08-07 (three closed watches moved to docs/l
 - 2027-01-15 | Nebraska § 48-101.01 PTSD sunset watch: unchanged, still sunsets Jan 1, 2028. LB400 (WC cancer presumption) confirmed dead — cloture failed 32-15 March 30, 2026, formally indefinitely postponed April 17, 2026. Watch the 110th Legislature (Jan 2027) for reintroduction.
 - 2027-09-01 (was 2027-06-01, corrected to standard biennial cadence) | Montana 2027 session — PTSD and cancer: Ch. 442 L. 2023's addition of non-Hodgkin's lymphoma and testicular cancer to MCA § 39-71-1401 is now **confirmed** (exact effective-date clause still inferred, not directly confirmed from bill text). SB 394 PTSD bill remains vetoed (June 2025); sponsor reportedly reworking a new approach for 2027, no draft yet.
 
-**Standing cadence (Peter, 2026-10-16):** full 50-state search/update the first week of Jan, Apr, Jul and Oct; next run 2027-01-04. Arizona PTSD sunset gets a one-off check 2026-12-01 (lapses Jan 1, 2027, before the January run); every other watch folds into the nearest quarterly run. Supersedes the per-state Sept/January cadence in `registry.md`. Reminders in Bob notes.md + macOS Reminders.
+**Standing cadence (Peter, 2026-10-16):** full 50-state search/update the first week of Jan, Apr, Jul and Oct; next run 2027-01-04. Arizona PTSD sunset gets a one-off check 2026-12-01 (lapses Jan 1, 2027, before the January run); every other watch folds into the nearest quarterly run. Per-state Sept/January cadence in `registry.md` retired. Reminders in Bob notes.md + macOS Reminders.
 
 ## Start Here Next Session
 
