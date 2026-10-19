@@ -1,4 +1,5 @@
 ---
+card_schema: bob/2
 project: Presumptive Laws Dashboard
 type: web
 status: active
